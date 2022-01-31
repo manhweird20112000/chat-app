@@ -14,6 +14,7 @@ export function Sidebar(props: SidebarProps) {
 			read_status: 'UNREAD',
 			lastUser: 15,
 			username: 'dilys1210',
+			online: 1,
 		},
 		{
 			id: 2,
@@ -24,6 +25,7 @@ export function Sidebar(props: SidebarProps) {
 			read_status: 'READ',
 			lastUser: 15,
 			username: 'hs.robe',
+			online: 1,
 		},
 	];
 
@@ -32,6 +34,7 @@ export function Sidebar(props: SidebarProps) {
 			{chats.map((item) => (
 				<Link key={item.id} to={item.username}>
 					<UserChat
+						isOnline={item.online}
 						userId={item.userId}
 						fullname={item.fullname}
 						message={item.message}

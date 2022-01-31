@@ -1,4 +1,4 @@
-import { Avatar, Message } from 'components';
+import { Avatar, Message, TimeLine } from 'components';
 
 export function Chat() {
 	return (
@@ -16,8 +16,35 @@ export function Chat() {
 				<div></div>
 			</div>
 			<div>
-				<Message color="#0084ff" message="kid" />
+				<TimeLine />
+				{listMessage.map((item) => (
+					<Message
+						key={item.id}
+						message={item.message}
+						userId={item.userId}
+						color="pink"
+					/>
+				))}
 			</div>
 		</div>
 	);
 }
+
+const listMessage = [
+	{
+		id: 1,
+		message: 'Hello',
+		userId: 1,
+	},
+	{
+		id: 2,
+		message:
+			'IM Possible VS $A Milo VS Cà Nâu - 1, 2, 3 - Team Binz | Rap Việt - Mùa 2 [MV Lyrics]',
+		userId: 1,
+	},
+	{
+		id: 3,
+		message: 'Hello',
+		userId: 5,
+	},
+];

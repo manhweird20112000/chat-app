@@ -1,4 +1,5 @@
 export interface MessageProps {
+  userId: number,
   message: string,
-  color: string,
+  color?: string,
 }

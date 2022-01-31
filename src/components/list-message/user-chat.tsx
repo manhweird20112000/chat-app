@@ -14,6 +14,7 @@ export function UserChat(props: UserChatProps) {
 		onlineTime,
 		avatar,
 		lastUser,
+		isOnline,
 	} = props;
 	const user = {
 		id: 10,
@@ -31,7 +32,7 @@ export function UserChat(props: UserChatProps) {
 		<div
 			className="p-2 cursor-pointer hover:bg-gray-100 rounded-xl pb-2 flex items-center"
 			onClick={() => onPress(userId)}>
-			<Avatar size={56} uri={avatar} />
+			<Avatar size={56} uri={avatar} isOnline={isOnline} />
 			<div className="ml-3 w-[79%]">
 				<p className="text-base font-medium">{fullname}</p>
 				<div className="flex items-center justify-between">
