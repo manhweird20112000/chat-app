@@ -1,18 +1,17 @@
 import { IconSearch } from 'assets';
 import { Avatar, Sidebar } from 'components';
+import { useAppSelector } from 'hooks/hooks';
 import { HomeRoutes } from 'routes';
 import './styles.scss';
 
 export function MainLayout() {
+	const user = useAppSelector((state) => state.user);
 	return (
 		<div className="flex">
 			<div id="sidebar" className="w-[360px] px-2 border-r-[1px] h-screen">
 				<div className="px-2 py-4">
 					<div className="flex items-center justify-start ">
-						<Avatar
-							size={36}
-							uri="https://i.pinimg.com/564x/aa/e3/91/aae39130ea0941683983b51a33f689b8.jpg"
-						/>
+						<Avatar size={36} uri={user.avatar} />
 						<p className="font-bold text-2xl ml-3">Chat</p>
 					</div>
 				</div>

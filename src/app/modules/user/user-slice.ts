@@ -2,12 +2,14 @@ import { createSlice } from "@reduxjs/toolkit"
 
 interface UserState {
   id: number,
-  fullname: string
+  fullname: string,
+  avatar: string,
 }
 
 const initialState: UserState = {
-  id: 0,
-  fullname: "Đinh Mạnh"
+  id: 10,
+  fullname: "Đinh Mạnh",
+  avatar: 'https://i.pinimg.com/564x/aa/e3/91/aae39130ea0941683983b51a33f689b8.jpg'
 }
 
 export const userSlice = createSlice({

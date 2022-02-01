@@ -1,8 +1,11 @@
+import { selectUser } from 'app/modules/chat/chat-slice';
 import { UserChat } from 'components';
+import { useAppDispath } from 'hooks/hooks';
 import { Link } from 'react-router-dom';
 import { SidebarProps } from './sidebar.props';
 
 export function Sidebar(props: SidebarProps) {
+	const dispath = useAppDispath();
 	const chats = [
 		{
 			id: 1,
@@ -14,7 +17,7 @@ export function Sidebar(props: SidebarProps) {
 			read_status: 'UNREAD',
 			lastUser: 15,
 			username: 'dilys1210',
-			online: 1,
+			online: 'OFFLINE',
 		},
 		{
 			id: 2,
@@ -25,9 +28,19 @@ export function Sidebar(props: SidebarProps) {
 			read_status: 'READ',
 			lastUser: 15,
 			username: 'hs.robe',
-			online: 1,
+			online: 'ONLINE',
 		},
 	];
+
+	const handleSelector = (user: any) => {
+		dispath(
+			selectUser({
+				user: user.userId,
+				avatar: user.avatar,
+				fullname: user.fullname,
+			})
+		);
+	};
 
 	return (
 		<div className="overflow-x-hidden overflow-y-auto mt-2">
@@ -40,7 +53,7 @@ export function Sidebar(props: SidebarProps) {
 						message={item.message}
 						read_status={item.read_status}
 						lastUser={item.lastUser}
-						onPress={() => console.log(item.fullname)}
+						onPress={() => handleSelector(item)}
 						avatar={item.avatar}
 						username={'disly0712'}
 					/>

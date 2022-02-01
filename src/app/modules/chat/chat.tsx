@@ -1,30 +1,23 @@
-import { Avatar, Message, TimeLine } from 'components';
+import { Message, Navbar, TimeLine, ToolBar } from 'components';
 
 export function Chat() {
 	return (
 		<div className="">
-			<div
-				className="py-3 px-4 border-b-[1px]"
-				style={{ boxShadow: '5px -3px 20px 1px rgba(0, 0, 0, 0.08)' }}>
-				<div className="flex items-center">
-					<Avatar
-						uri="https://scontent.fhan3-3.fna.fbcdn.net/v/t39.30808-6/271139103_1076409309569843_4136733297496816757_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=8bfeb9&_nc_ohc=48KMSGP9LmwAX-m79ES&_nc_ht=scontent.fhan3-3.fna&oh=00_AT8eR-Mo4INM991KJFIlVMZKBP3xcHgZmZzK2BoDsWRXKw&oe=61FBFC1D"
-						size={40}
-					/>
-					<p className="font-medium text-lg ml-2">Đồng Thúy Quỳnh</p>
-				</div>
-				<div></div>
-			</div>
+			<Navbar />
 			<div>
 				<TimeLine />
 				{listMessage.map((item) => (
 					<Message
+						avatar="https://i.pinimg.com/564x/aa/e3/91/aae39130ea0941683983b51a33f689b8.jpg"
 						key={item.id}
 						message={item.message}
 						userId={item.userId}
 						color="pink"
 					/>
 				))}
+			</div>
+			<div>
+				<ToolBar />
 			</div>
 		</div>
 	);

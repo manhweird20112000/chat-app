@@ -8,6 +8,6 @@ export interface UserChatProps {
   onlineTime?: string,
   lastUser: number,
   type?: string,
-  isOnline: number,
-  onPress(userId: number): void
+  isOnline: string,
+  onPress(): void
 }

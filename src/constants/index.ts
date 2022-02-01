@@ -5,3 +5,8 @@ export const EVENT_CHAT = {
   READ: 'READ',
   SEEN: 'SEEN',
 }
+
+export const USER_TYPE = {
+  ONLINE: 'ONLINE',
+  OFFLINE: 'OFFLINE'
+}

@@ -2,7 +2,7 @@ export interface AvatarProps {
   size: number,
   title?: string,
   uri: string,
-  isOnline?: number,
+  isOnline?: string,
   onlineSize?: number,
   onPress?(): void
 }
