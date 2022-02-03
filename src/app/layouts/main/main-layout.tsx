@@ -8,14 +8,16 @@ export function MainLayout() {
 	const user = useAppSelector((state) => state.user);
 	return (
 		<div className="flex">
-			<div id="sidebar" className="w-[360px] px-2 border-r-[1px] h-screen">
+			<div
+				id="sidebar"
+				className="xl:w-[360px] hidden xl:block md:block pl-2 pr-0.5 border-r-[1px] pb-10 h-screen overflow-y-hidden">
 				<div className="px-2 py-4">
-					<div className="flex items-center justify-start ">
+					<div className="flex items-center xl:justify-start md:justify-center ">
 						<Avatar size={36} uri={user.avatar} />
-						<p className="font-bold text-2xl ml-3">Chat</p>
+						<p className="font-bold text-2xl ml-3 xl:block md:hidden">Chat</p>
 					</div>
 				</div>
-				<div className="relative p-2">
+				<div className="relative p-2 xl:block md:hidden">
 					<input
 						type="text"
 						placeholder="Tìm kiếm trên Messenger"

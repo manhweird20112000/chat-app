@@ -1,0 +1,21 @@
+#list-user-chat {
+	height: calc(100vh - 135px);
+	&::-webkit-scrollbar-track {
+		background-color: transparent;
+	}
+	&::-webkit-scrollbar {
+		width: 5px;
+		background-color: transparent;
+	}
+	&::-webkit-scrollbar-thumb {
+		border-radius: 100rem;
+		background-color: rgba(128, 128, 128, 0.5);
+	}
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+	#list-user-chat {
+		height: calc(100vh - 80px);
+	}
+}
+

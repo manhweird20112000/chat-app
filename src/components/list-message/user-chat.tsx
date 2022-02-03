@@ -33,7 +33,7 @@ export function UserChat(props: UserChatProps) {
 			className="p-2 cursor-pointer hover:bg-gray-100 rounded-xl pb-2 flex items-center"
 			onClick={onPress}>
 			<Avatar size={56} uri={avatar} isOnline={isOnline} />
-			<div className="ml-3 w-[79%]">
+			<div className="ml-3 xl:block md:hidden xl:w-[79%]">
 				<p className="text-base font-medium">{fullname}</p>
 				<div className="flex items-center justify-between">
 					<p
