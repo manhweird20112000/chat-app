@@ -1,6 +1,11 @@
+import React, { useEffect } from 'react';
 import { Message, Navbar, TimeLine, ToolBar } from 'components';
 
-export function Chat() {
+export function Chat(props: any) {
+	useEffect(() => {
+		console.log(props);
+		return () => console.log('ok');
+	}, [props.match.params]);
 	return (
 		<div className="">
 			<Navbar />
