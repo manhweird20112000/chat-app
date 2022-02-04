@@ -1,4 +1,20 @@
+import * as Yup from 'yup';
+import { useFormik } from 'formik';
+
 export function LoginPage() {
+	const login = useFormik({
+		initialValues: {
+			email: '',
+			password: '',
+		},
+		validationSchema: Yup.object({
+			email: Yup.string().email().required(),
+			password: Yup.string().required().min(6),
+		}),
+		onSubmit: (value) => {
+			console.log(value);
+		},
+	});
 	return (
 		<div id="auth" className="h-screen" style={{ background: '#f0f2f5' }}>
 			<div className="xl:mx-auto max-w-screen-lg flex items-center justify-center h-full">
@@ -9,19 +25,24 @@ export function LoginPage() {
 						của bạn.
 					</p>
 				</div>
-				<div className="bg-white rounded-xl p-2 mx-5">
-					<form action="" method="post">
+				<div className="bg-white rounded-xl py-2 px-4 mx-5">
+					<form onSubmit={login.handleSubmit} method="post">
 						<div>
 							<input
 								type="text"
 								name="email"
 								id="email"
+								onChange={login.handleChange}
+								value={login.values.email}
 								placeholder="Email hoặc số điện thoại"
 								className="w-full border-2 border-gray-300 rounded-lg px-4 py-3 font-medium text-lg outline-1 outline-blue-600 my-2"
 							/>
 							<input
+								onChange={login.handleChange}
 								type="password"
+								name="password"
 								placeholder="Mật khẩu"
+								value={login.values.password}
 								className="w-full border-2 border-gray-300 rounded-lg px-4 py-3 font-medium text-lg outline-1 outline-blue-600 my-2"
 							/>
 							<button
