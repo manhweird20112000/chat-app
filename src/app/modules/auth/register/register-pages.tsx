@@ -1,8 +1,12 @@
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
+import { IconClose } from 'assets';
+import { RegisterProps } from './register.props';
+import { useEffect } from 'react';
 
-export function RegisterPages() {
+export function RegisterPages(props: RegisterProps) {
+	const { hideModal } = props;
 	const formik = useFormik({
 		initialValues: {
 			firstName: '',
@@ -29,16 +33,26 @@ export function RegisterPages() {
 		},
 	});
 
+	// useEffect(() => {
+	// 	console.log('tạo');
+	// 	return () => console.log('clear');
+	// });
+
 	return (
-		<div
-			style={{ background: '#f0f2f5' }}
-			className="w-screen h-screen flex items-center justify-center">
-			<div className="w-[432px] bg-white rounded-xl">
-				<div className="px-3 pt-2 py-1">
+		<div className="w-screen h-screen flex items-center justify-center">
+			<div
+				className="w-[432px] bg-white rounded-lg"
+				style={{ boxShadow: '2px 5px 15px 1px rgba(0, 0,0, 0.2)' }}>
+				<div className="px-3 pt-2 py-1 relative">
 					<p className="font-bold text-3xl">Đăng ký</p>
 					<p className="text-base font-normal text-gray-500 mt-1">
 						Nhanh chóng và dễ dàng
 					</p>
+					<div
+						className="absolute top-0 right-0 cursor-pointer"
+						onClick={hideModal}>
+						<IconClose size={45} />
+					</div>
 				</div>
 				<div className="h-[1px] bg-gray-200 w-full my-1"></div>
 				<form
