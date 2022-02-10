@@ -50,30 +50,49 @@ export function RegisterPages() {
 							onChange={formik.handleChange}
 							value={formik.values.firstName}
 							type="text"
+							name="firstName"
 							placeholder="Họ"
-							className="w-[49%] outline-none text-md font-normal px-2 py-2 border-[1.5px] border-gray-400 rounded-md bg-gray-100"
+							className={`w-[49%] outline-none text-md font-normal px-2 py-2 border-[1.5px] border-gray-400 rounded-md bg-gray-100 ${
+								formik.errors.firstName && formik.touched.firstName
+									? 'border-red-500'
+									: ''
+							}`}
 						/>
 						<input
 							onChange={formik.handleChange}
 							value={formik.values.lastName}
 							type="text"
+							name="lastName"
 							placeholder="Tên"
-							className="w-[49%] outline-none text-md font-normal px-2 py-2 border-[1.5px] border-gray-400 rounded-md bg-gray-100"
+							className={`w-[49%] outline-none text-md font-normal px-2 py-2 border-[1.5px] border-gray-400 rounded-md bg-gray-100 ${
+								formik.errors.lastName && formik.touched.lastName
+									? 'border-red-500'
+									: ''
+							}`}
 						/>
 					</div>
 					<input
 						onChange={formik.handleChange}
 						value={formik.values.email}
-						type="email"
+						type="text"
+						name="email"
 						placeholder="Số điện thoại  hoặc email"
-						className="my-1 w-full outline-none text-md font-normal px-2 py-2 border-[1.5px] border-gray-400 rounded-md bg-gray-100"
+						className={`my-1 w-full outline-none text-md font-normal px-2 py-2 border-[1.5px] border-gray-400 rounded-md bg-gray-100 ${
+							formik.errors.email && formik.touched.email
+								? 'border-red-500'
+								: ''
+						}`}
 					/>
 					<input
 						onChange={formik.handleChange}
 						value={formik.values.password}
 						type="password"
 						placeholder="Mật khẩu mới"
-						className="my-1 w-full outline-none text-md font-normal px-2 py-2 border-[1.5px] border-gray-400 rounded-md bg-gray-100"
+						className={`my-1 w-full outline-none text-md font-normal px-2 py-2 border-[1.5px] border-gray-400 rounded-md bg-gray-100 ${
+							formik.errors.password && formik.touched.password
+								? 'border-red-500'
+								: ''
+						}`}
 					/>
 					<div>
 						<label className="text-sm text-gray-500">Sinh nhật</label>
@@ -83,23 +102,35 @@ export function RegisterPages() {
 								value={formik.values.day}
 								name="day"
 								id="day"
-								className="min-w-[33%] outline-none text-md font-normal border-[1.5px] border-gray-400 rounded-md py-1 pl-1">
+								className={`min-w-[33%] outline-none text-md font-normal border-[1.5px] border-gray-400 rounded-md py-1 pl-1 ${
+									formik.errors.day && formik.touched.day
+										? 'border-red-500'
+										: ''
+								}`}>
 								<option value="1">1</option>
 							</select>
 							<select
-              	onChange={formik.handleChange}
-                value={formik.values.month}
+								onChange={formik.handleChange}
+								value={formik.values.month}
 								name="month"
-								id="day"
-								className="min-w-[33%] outline-none text-md font-normal border-[1.5px] border-gray-400 rounded-md py-1 pl-1">
+								id="month"
+								className={`min-w-[33%] outline-none text-md font-normal border-[1.5px] border-gray-400 rounded-md py-1 pl-1 ${
+									formik.errors.month && formik.touched.month
+										? 'border-red-500'
+										: ''
+								}`}>
 								<option value=""></option>
 							</select>
 							<select
-              	onChange={formik.handleChange}
-                value={formik.values.year}
+								onChange={formik.handleChange}
+								value={formik.values.year}
 								name="year"
-								id="day"
-								className="min-w-[33%] outline-none text-md font-normal border-[1.5px] border-gray-400 rounded-md py-1 pl-1">
+								id="year"
+								className={`min-w-[33%] outline-none text-md font-normal border-[1.5px] border-gray-400 rounded-md py-1 pl-1 ${
+									formik.errors.year && formik.touched.year
+										? 'border-red-500'
+										: ''
+								}`}>
 								<option value=""></option>
 							</select>
 						</div>
@@ -111,13 +142,7 @@ export function RegisterPages() {
 								htmlFor="female"
 								className="outline-none text-md font-normal border-[1.5px] border-gray-400 rounded-md py-1 px-2 flex items-center justify-between ">
 								<label>Nữ</label>
-								<input
-									id="female"
-									type="radio"
-									value="FEMALE"
-									checked
-									name="gender"
-								/>
+								<input id="female" type="radio" value="FEMALE" name="gender" />
 							</label>
 							<label
 								htmlFor="male"
