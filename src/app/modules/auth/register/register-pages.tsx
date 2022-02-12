@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import { IconClose } from 'assets';
 import { RegisterProps } from './register.props';
 import { useAppDispath } from 'hooks/hooks';
-import { registerAsync } from 'app/modules/user/user-slice';
 import moment from 'moment';
+import { authRegister } from '../auth-slice';
 
 export function RegisterPages(props: RegisterProps) {
 	const { hideModal } = props;
@@ -32,10 +32,10 @@ export function RegisterPages(props: RegisterProps) {
 
 		onSubmit: (value) => {
 			const payload = {
-				...value, 
-				birthday: moment(value.birthday).format('DD-MM-YYYY')
-			}
-			dispath(registerAsync(payload));
+				...value,
+				birthday: moment(value.birthday).format('DD-MM-YYYY'),
+			};
+			dispath(authRegister(payload));
 		},
 	});
 

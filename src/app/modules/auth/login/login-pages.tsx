@@ -2,12 +2,11 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { RegisterPages } from '../..';
 import { useState } from 'react';
-import { useAppDispath, useAppSelector } from 'hooks/hooks';
+import { useAppDispath } from 'hooks/hooks';
 import { authLogin } from '../auth-slice';
 
 export function LoginPage() {
 	const [modalRegister, setModalRegister] = useState<Boolean>(false);
-	const user = useAppSelector((state) => state.auth.user);
 	const dispath = useAppDispath();
 	const login = useFormik({
 		initialValues: {
@@ -32,7 +31,7 @@ export function LoginPage() {
 			<div className="xl:mx-auto max-w-screen-lg flex xl:items-center justify-center h-full xl:flex-row flex-col md:flex-row md:items-center">
 				<div className="mx-5 my-5">
 					<p className="text-blue-600 font-bold text-5xl xl:text-6xl">
-						facebook {JSON.stringify(user)}
+						facebook
 					</p>
 					<p className="font-normal text-2xl mt-5 hidden xl:block md:block">
 						Facebook giúp bạn kết nối và chia sẻ với mọi người trong cuộc sống

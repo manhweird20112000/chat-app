@@ -11,18 +11,7 @@ export function Sidebar(props: SidebarProps) {
 	const [loading, setLoading] = useState<Boolean>(false);
 	const dispath = useAppDispath();
 	const chats = [
-		{
-			id: 16,
-			userId: 15,
-			avatar:
-				'https://scontent.fhan3-4.fna.fbcdn.net/v/t39.30808-6/259962754_1262584720892476_2520426149541909923_n.jpg?_nc_cat=106&ccb=1-5&_nc_sid=174925&_nc_ohc=2S1qphJgoMEAX9KNntF&_nc_ht=scontent.fhan3-4.fna&oh=00_AT9Q7XS2J86_qe_gI7ixsVbJ00fXDm4QmstkbZEYd6ldGw&oe=62004B98',
-			fullname: 'Đinh Mạnh',
-			message: 'yah...',
-			read_status: 'UNREAD',
-			lastUser: 15,
-			username: 'manh.weird',
-			online: 'ONLINE',
-		},
+		
 		{
 			id: 1,
 			userId: 1,
