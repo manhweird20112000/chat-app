@@ -1,11 +1,20 @@
-import axios from "axios";
-import { API_AUTH_LOGIN } from "./constants";
 
-interface LoginPayload {
-  email: string,
-  password: string
+import AxiosRequest from '../AxiosRequest';
+import { API_AUTH_LOGIN, API_AUTH_REGISTER } from './constants';
+
+export async function login(payload: any) {
+	return new Promise((resolve, reject) => {
+		AxiosRequest.post(API_AUTH_LOGIN, payload)
+			.then((res) => resolve(res.data.data))
+			.catch((error) => reject(error));
+	});
 }
 
-export async function login(payload: LoginPayload) {
-  return axios.post(process.env.REACT_APP_API_URL + API_AUTH_LOGIN, payload)
+export async function register(payload: any) {
+	return AxiosRequest.post(API_AUTH_REGISTER, payload)
+		.then((response) => {
+			console.log(response);
+			return response;
+		})
+		.catch((error) => error);
 }

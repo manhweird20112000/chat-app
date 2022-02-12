@@ -4,10 +4,10 @@ import { AuthRoutes } from 'routes/auth/auth-routes';
 import { MainLayout } from './app/layouts';
 
 function App() {
-	const user = useAppSelector((state) => state.user);
+	const user = useAppSelector((state) => state.auth.user);
 	return (
 		<div className="app">
-			<Router>{user.token === '' ? <AuthRoutes /> : <MainLayout />}</Router>
+			<Router>{user?.token === '' ? <AuthRoutes /> : <MainLayout />}</Router>
 		</div>
 	);
 }

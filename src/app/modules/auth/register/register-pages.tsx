@@ -3,19 +3,22 @@ import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
 import { IconClose } from 'assets';
 import { RegisterProps } from './register.props';
-import { useEffect } from 'react';
+import { useAppDispath } from 'hooks/hooks';
+import { registerAsync } from 'app/modules/user/user-slice';
+import moment from 'moment';
 
 export function RegisterPages(props: RegisterProps) {
 	const { hideModal } = props;
+
+	const dispath = useAppDispath();
+
 	const formik = useFormik({
 		initialValues: {
 			firstName: '',
 			lastName: '',
 			email: '',
 			password: '',
-			day: '',
-			month: '',
-			year: '',
+			birthday: moment(Date.now()),
 			gender: '',
 		},
 		validationSchema: Yup.object({
@@ -23,13 +26,16 @@ export function RegisterPages(props: RegisterProps) {
 			lastName: Yup.string().required(),
 			email: Yup.string().required().email(),
 			password: Yup.string().required().min(6),
-			day: Yup.string().required(),
-			month: Yup.string().required(),
-			year: Yup.string().required(),
-			gender: Yup.string().required(),
+			// bithday: Yup.string().required(),
+			gender: Yup.string().required().oneOf(['MALE', 'FEMALE']),
 		}),
+
 		onSubmit: (value) => {
-			console.log(value);
+			const payload = {
+				...value, 
+				birthday: moment(value.birthday).format('DD-MM-YYYY')
+			}
+			dispath(registerAsync(payload));
 		},
 	});
 
@@ -98,6 +104,7 @@ export function RegisterPages(props: RegisterProps) {
 						}`}
 					/>
 					<input
+						name="password"
 						onChange={formik.handleChange}
 						value={formik.values.password}
 						type="password"
@@ -108,47 +115,23 @@ export function RegisterPages(props: RegisterProps) {
 								: ''
 						}`}
 					/>
-					<div>
+					{/* <div>
 						<label className="text-sm text-gray-500">Sinh nhật</label>
-						<div className="grid grid-cols-3 gap-1 my-1">
-							<select
-								onChange={formik.handleChange}
-								value={formik.values.day}
-								name="day"
-								id="day"
-								className={`min-w-[33%] outline-none text-md font-normal border-[1.5px] border-gray-400 rounded-md py-1 pl-1 ${
-									formik.errors.day && formik.touched.day
+						<div className="my-1">
+							<DatePicker
+								name="birthday"
+								format={'DD-MM-YYYY'}
+								className={`my-1 w-full outline-none text-md font-normal px-2 py-2 border-[1.5px] border-gray-400 rounded-md bg-gray-100 ${
+									formik.errors.birthday && formik.touched.birthday
 										? 'border-red-500'
 										: ''
-								}`}>
-								<option value="1">1</option>
-							</select>
-							<select
+								}`}
+								placeholder="Chọn ngày sinh nhật"
+								value={formik.values.birthday}
 								onChange={formik.handleChange}
-								value={formik.values.month}
-								name="month"
-								id="month"
-								className={`min-w-[33%] outline-none text-md font-normal border-[1.5px] border-gray-400 rounded-md py-1 pl-1 ${
-									formik.errors.month && formik.touched.month
-										? 'border-red-500'
-										: ''
-								}`}>
-								<option value=""></option>
-							</select>
-							<select
-								onChange={formik.handleChange}
-								value={formik.values.year}
-								name="year"
-								id="year"
-								className={`min-w-[33%] outline-none text-md font-normal border-[1.5px] border-gray-400 rounded-md py-1 pl-1 ${
-									formik.errors.year && formik.touched.year
-										? 'border-red-500'
-										: ''
-								}`}>
-								<option value=""></option>
-							</select>
+							/>
 						</div>
-					</div>
+					</div> */}
 					<div className="my-1">
 						<label className="text-sm text-gray-500">Giới tính</label>
 						<div className="grid grid-cols-3 gap-2">
@@ -156,13 +139,25 @@ export function RegisterPages(props: RegisterProps) {
 								htmlFor="female"
 								className="outline-none text-md font-normal border-[1.5px] border-gray-400 rounded-md py-1 px-2 flex items-center justify-between ">
 								<label>Nữ</label>
-								<input id="female" type="radio" value="FEMALE" name="gender" />
+								<input
+									id="female"
+									type="radio"
+									value="FEMALE"
+									name="gender"
+									onChange={formik.handleChange}
+								/>
 							</label>
 							<label
 								htmlFor="male"
 								className="outline-none text-md font-normal border-[1.5px] border-gray-400 rounded-md py-1 px-2 flex items-center justify-between ">
 								<label>Nam</label>
-								<input type="radio" value="MALE" name="gender" id="male" />
+								<input
+									type="radio"
+									value="MALE"
+									name="gender"
+									id="male"
+									onChange={formik.handleChange}
+								/>
 							</label>
 						</div>
 					</div>
