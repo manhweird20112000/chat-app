@@ -7,7 +7,7 @@ export async function login(payload: any) {
   return new Promise((resolve, reject) => {
     AxiosRequest.post(API_AUTH_LOGIN, payload)
       .then((res) => {
-        TokenService.setUser('user', res.data.data)
+        TokenService.setUser( res.data.data, 'user')
         resolve(res.data.data)
       })
       .catch((error) => reject(error));

@@ -23,7 +23,7 @@ function updateLocalAccessToken(key: string, token: string): void {
   localStorage.setItem(key, JSON.stringify(user));
 }
 
-function getUser(key: string): string {
+function getUser(key: string): any {
   const data: any = localStorage.getItem(key);
   return JSON.parse(data);
 }
