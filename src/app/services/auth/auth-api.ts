@@ -1,11 +1,15 @@
 
+import TokenService from 'utils/token-service';
 import AxiosRequest from '../AxiosRequest';
 import { API_AUTH_LOGIN, API_AUTH_REGISTER } from './constants';
 
 export async function login(payload: any) {
   return new Promise((resolve, reject) => {
     AxiosRequest.post(API_AUTH_LOGIN, payload)
-      .then((res) => resolve(res.data.data))
+      .then((res) => {
+        TokenService.setUser('user', res.data.data)
+        resolve(res.data.data)
+      })
       .catch((error) => reject(error));
   });
 }

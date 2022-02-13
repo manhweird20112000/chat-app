@@ -13,7 +13,7 @@ const initialState: AuthState = {
 
 export const authRegister = createAsyncThunk(
   'auth/register',
-  async (payload :any) => {
+  async (payload: any) => {
     const response = await register(payload);
     return response;
   }
