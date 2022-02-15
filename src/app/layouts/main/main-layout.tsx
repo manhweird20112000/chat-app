@@ -1,7 +1,7 @@
 import { IconSearch } from 'assets';
 import { Avatar, Sidebar } from 'components';
 import { useAppSelector } from 'hooks/hooks';
-import { HomeRoutes } from 'routes';
+import { ChatRoutes, HomeRoutes } from 'routes';
 import './styles.scss';
 
 export function MainLayout() {
@@ -10,7 +10,7 @@ export function MainLayout() {
 		<div className="flex">
 			<div
 				id="sidebar"
-				className="xl:w-[360px] hidden xl:block md:block pl-2 pr-0.5 border-r-[1px] pb-10 h-screen overflow-y-hidden">
+				className="xl:w-[360px]  hidden xl:block md:block pl-2 pr-0.5 border-r-[1px] pb-10 h-screen overflow-y-hidden">
 				<div className="px-2 py-4">
 					<div className="flex items-center xl:justify-start md:justify-center ">
 						<Avatar size={36} uri={user.avatar} />
@@ -30,7 +30,8 @@ export function MainLayout() {
 				<Sidebar />
 			</div>
 			<div id="container" className="">
-				<HomeRoutes />
+				<ChatRoutes />
+				{/* <HomeRoutes /> */}
 			</div>
 		</div>
 	);

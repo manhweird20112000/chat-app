@@ -4,10 +4,12 @@ import { RegisterPages } from '../..';
 import { useState } from 'react';
 import { useAppDispath } from 'hooks/hooks';
 import { authLogin } from '../auth-slice';
+import { useHistory } from 'react-router-dom';
 
 export function LoginPage() {
 	const [modalRegister, setModalRegister] = useState<Boolean>(false);
 	const dispath = useAppDispath();
+	const history = useHistory();
 	const login = useFormik({
 		initialValues: {
 			email: '',
@@ -19,6 +21,7 @@ export function LoginPage() {
 		}),
 		onSubmit: (value) => {
 			dispath(authLogin(value));
+			history.replace('/');
 		},
 	});
 
@@ -38,7 +41,7 @@ export function LoginPage() {
 						của bạn.
 					</p>
 				</div>
-				<div className="bg-white rounded-xl py-2 px-4 mx-5">
+				<div className="xl:max-w-[396px] bg-white rounded-xl py-2 px-4 mx-5">
 					<form onSubmit={login.handleSubmit} method="post">
 						<div>
 							<input

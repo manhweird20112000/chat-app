@@ -1,12 +1,15 @@
-import { Chat } from 'app/modules';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { MainLayout } from 'app/layouts';
+import { LoginPage } from 'app/modules';
+import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
+import { AuthRoutes } from 'routes/auth/auth-routes';
 
 export function HomeRoutes() {
 	return (
-		<Switch>
-			<Route path="/chat" exact component={Chat} />
-			<Route path="/chat/:id" exact component={Chat} />
-			<Redirect to="/chat" />
-		</Switch>
+		<Router>
+			<Switch>
+				<Route exact path="/login" component={LoginPage} />
+				<AuthRoutes path="/" component={MainLayout} />
+			</Switch>
+		</Router>
 	);
 }

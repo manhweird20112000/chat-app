@@ -1,12 +1,22 @@
-import { LoginPage, RegisterPages } from 'app/modules';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { useAuth } from 'hooks';
+import { Redirect, Route } from 'react-router-dom';
 
-export function AuthRoutes() {
+export function AuthRoutes(props: any) {
+	const { component: Component, ...rest } = props;
+	const { isAuth } = useAuth();
 	return (
-		<Switch>
-			<Route path="/login" exact component={LoginPage} />
-			<Route path="/resgiter" exact component={RegisterPages} />
-			<Redirect to="/login" />
-		</Switch>
+		<Route
+			exact
+			{...rest}
+			render={(props) =>
+				isAuth() ? (
+					<Component {...props} />
+				) : (
+					<Redirect
+						to={{ pathname: '/login', state: { from: props.location } }}
+					/>
+				)
+			}
+		/>
 	);
 }
