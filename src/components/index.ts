@@ -6,3 +6,4 @@ export * from './timeline/time-line';
 export * from './toolbar/tool-bar';
 export * from './navbar/navbar'
 export * from './footer/footer'
+export * from './loading/loading'
