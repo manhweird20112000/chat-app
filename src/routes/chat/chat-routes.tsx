@@ -4,7 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 export function ChatRoutes() {
 	return (
 		<Switch>
-			<Route exact path={'/:id'} component={Chat} />
+			<Route exact path={'/t/:id'} component={Chat} />
 		</Switch>
 	);
 }

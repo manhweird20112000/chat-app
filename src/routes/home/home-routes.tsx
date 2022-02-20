@@ -7,8 +7,8 @@ export function HomeRoutes() {
 	return (
 		<Router>
 			<Switch>
-				<Route exact path="/login" component={LoginPage} />
-				<AuthRoutes path="/" component={MainLayout} />
+				<Route exact path="/" component={LoginPage} />
+				<AuthRoutes path="/t" component={MainLayout} />
 			</Switch>
 		</Router>
 	);

@@ -21,7 +21,7 @@ export function LoginPage() {
 		}),
 		onSubmit: (value) => {
 			dispath(authLogin(value));
-			history.replace('/');
+			history.replace('/t');
 		},
 	});
 

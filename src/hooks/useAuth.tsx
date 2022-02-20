@@ -3,6 +3,7 @@ import TokenService from 'utils/token-service';
 export function useAuth() {
 	function isAuth() {
 		const user = TokenService.getUser('user');
+		console.log(user);
 		if (user) {
 			return true;
 		} else {

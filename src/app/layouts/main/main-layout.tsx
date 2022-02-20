@@ -29,7 +29,7 @@ export function MainLayout() {
 				</div>
 				<Sidebar />
 			</div>
-			<div id="container" className="">
+			<div id="container">
 				<ChatRoutes />
 				{/* <HomeRoutes /> */}
 			</div>

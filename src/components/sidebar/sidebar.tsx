@@ -1,7 +1,6 @@
-import { selectUser } from 'app/modules/chat/chat-slice';
 import { UserChat } from 'components';
 import { useAppDispath } from 'hooks/hooks';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { SidebarProps } from './sidebar.props';
 import './styles.scss';
@@ -9,7 +8,7 @@ import './styles.scss';
 export function Sidebar(props: SidebarProps) {
 	const sidebar = useRef<any>(null);
 	const [loading, setLoading] = useState<Boolean>(false);
-	const dispath = useAppDispath();
+	const dispatch = useAppDispath();
 	const chats = [
 		{
 			id: 1,
@@ -26,13 +25,7 @@ export function Sidebar(props: SidebarProps) {
 	];
 
 	const handleSelector = (user: any) => {
-		dispath(
-			selectUser({
-				user: user.userId,
-				avatar: user.avatar,
-				fullname: user.fullname,
-			})
-		);
+		console.log('ok');
 	};
 
 	function handleScrollUserChat() {
@@ -44,6 +37,8 @@ export function Sidebar(props: SidebarProps) {
 		}
 	}
 
+	useEffect(() => {}, []);
+
 	return (
 		<div
 			ref={sidebar}
@@ -51,7 +46,7 @@ export function Sidebar(props: SidebarProps) {
 			className="overflow-x-hidden overflow-y-auto mt-2"
 			onScroll={handleScrollUserChat}>
 			{chats.map((item) => (
-				<Link key={item.id} to={'/' + item.username}>
+				<Link key={item.id} to={'/t/' + item.username}>
 					<UserChat
 						isOnline={item.online}
 						userId={item.userId}
