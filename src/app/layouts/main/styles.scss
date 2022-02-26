@@ -1,0 +1,12 @@
+.modal-main::before {
+	content: '';
+	border-width: 15px;
+	border-color: transparent transparent white transparent;
+	border-style: solid;
+	position: absolute;
+	top: -25px;
+	right: 5px;
+}
+.modal-main {
+	box-shadow: 2px -2px 15px 0px rgba(0, 0, 0, 0.08);
+}
