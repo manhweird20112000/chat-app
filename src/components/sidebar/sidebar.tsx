@@ -1,5 +1,5 @@
 import { fetchAsyncUsers } from 'app/features/user/user-slice';
-import { UserChat } from 'components';
+import { UserChat, UserConnection } from 'components';
 import { useAppDispatch } from 'hooks/hooks';
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -7,6 +7,7 @@ import { SidebarProps } from './sidebar.props';
 import './styles.scss';
 
 export function Sidebar(props: SidebarProps) {
+	const { type } = props;
 	const sidebar = useRef<any>(null);
 	const [loading, setLoading] = useState<Boolean>(false);
 	const dispatch = useAppDispatch();
@@ -42,32 +43,42 @@ export function Sidebar(props: SidebarProps) {
 		dispatch(fetchAsyncUsers());
 	}, []);
 
-	return (
-		<div
-			ref={sidebar}
-			id="list-user-chat"
-			className="overflow-x-hidden overflow-y-auto mt-2"
-			onScroll={handleScrollUserChat}>
-			{chats.map((item) => (
-				<Link key={item.id} to={'/t/' + item.username}>
-					<UserChat
-						isOnline={item.online}
-						userId={item.userId}
-						fullname={item.fullname}
-						message={item.message}
-						read_status={item.read_status}
-						lastUser={item.lastUser}
-						onPress={() => handleSelector(item)}
-						avatar={item.avatar}
-						username={item.username}
-					/>
-				</Link>
-			))}
-			{loading && (
-				<div className="text-center text-base text-gray-500 font-medium my-2">
-					Đang tải ...
-				</div>
-			)}
-		</div>
-	);
+	if (type === 'FRIEND') {
+		return (
+			<div
+				ref={sidebar}
+				id="list-user-chat"
+				className="overflow-x-hidden overflow-y-auto mt-2"
+				onScroll={handleScrollUserChat}>
+				{chats.map((item) => (
+					<Link key={item.id} to={'/t/' + item.username}>
+						<UserChat
+							isOnline={item.online}
+							userId={item.userId}
+							fullname={item.fullname}
+							message={item.message}
+							read_status={item.read_status}
+							lastUser={item.lastUser}
+							onPress={() => handleSelector(item)}
+							avatar={item.avatar}
+							username={item.username}
+						/>
+					</Link>
+				))}
+				{loading && (
+					<div className="text-center text-base text-gray-500 font-medium my-2">
+						Đang tải ...
+					</div>
+				)}
+			</div>
+		);
+	} else if (type === 'CONNECTION') {
+		return (
+			<div>
+				<UserConnection />
+			</div>
+		);
+	} else {
+		return <div>other</div>;
+	}
 }

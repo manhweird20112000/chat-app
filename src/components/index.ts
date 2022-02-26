@@ -7,3 +7,4 @@ export * from './toolbar/tool-bar';
 export * from './navbar/navbar'
 export * from './footer/footer'
 export * from './loading/loading'
+export * from './user-connection/user-connection'
