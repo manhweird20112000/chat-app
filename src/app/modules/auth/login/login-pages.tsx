@@ -2,13 +2,13 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { RegisterPages } from '../..';
 import { useState } from 'react';
-import { useAppDispath } from 'hooks/hooks';
+import { useAppDispatch } from 'hooks/hooks';
 import { authLogin } from '../auth-slice';
 import { useHistory } from 'react-router-dom';
 
 export function LoginPage() {
 	const [modalRegister, setModalRegister] = useState<Boolean>(false);
-	const dispath = useAppDispath();
+	const dispatch = useAppDispatch();
 	const history = useHistory();
 	const login = useFormik({
 		initialValues: {
@@ -20,7 +20,7 @@ export function LoginPage() {
 			password: Yup.string().required().min(6),
 		}),
 		onSubmit: (value) => {
-			dispath(authLogin(value));
+			dispatch(authLogin(value));
 			history.replace('/t');
 		},
 	});

@@ -1,11 +1,16 @@
 import { IconSearch } from 'assets';
 import { Avatar, Sidebar } from 'components';
+import { useDimensions } from 'hooks';
 import { useAppSelector } from 'hooks/hooks';
-import { ChatRoutes, HomeRoutes } from 'routes';
+import { ChatRoutes } from 'routes';
 import './styles.scss';
 
 export function MainLayout() {
 	const user = useAppSelector((state) => state.user);
+	const { width } = useDimensions();
+
+	const className = `xl:w-[${Number(width) - 360}px] w-screen `;
+
 	return (
 		<div className="flex">
 			<div
@@ -29,7 +34,7 @@ export function MainLayout() {
 				</div>
 				<Sidebar />
 			</div>
-			<div id="container">
+			<div id="container" className={className}>
 				<ChatRoutes />
 				{/* <HomeRoutes /> */}
 			</div>

@@ -1,5 +1,6 @@
+import { fetchAsyncUsers } from 'app/features/user/user-slice';
 import { UserChat } from 'components';
-import { useAppDispath } from 'hooks/hooks';
+import { useAppDispatch } from 'hooks/hooks';
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { SidebarProps } from './sidebar.props';
@@ -8,7 +9,7 @@ import './styles.scss';
 export function Sidebar(props: SidebarProps) {
 	const sidebar = useRef<any>(null);
 	const [loading, setLoading] = useState<Boolean>(false);
-	const dispatch = useAppDispath();
+	const dispatch = useAppDispatch();
 	const chats = [
 		{
 			id: 1,
@@ -37,7 +38,9 @@ export function Sidebar(props: SidebarProps) {
 		}
 	}
 
-	useEffect(() => {}, []);
+	useEffect(() => {
+		dispatch(fetchAsyncUsers());
+	}, []);
 
 	return (
 		<div

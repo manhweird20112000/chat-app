@@ -3,14 +3,14 @@ import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
 import { IconClose } from 'assets';
 import { RegisterProps } from './register.props';
-import { useAppDispath } from 'hooks/hooks';
+import { useAppDispatch } from 'hooks/hooks';
 import moment from 'moment';
 import { authRegister } from '../auth-slice';
 
 export function RegisterPages(props: RegisterProps) {
 	const { hideModal } = props;
 
-	const dispath = useAppDispath();
+	const dispatch = useAppDispatch();
 
 	const formik = useFormik({
 		initialValues: {
@@ -35,7 +35,7 @@ export function RegisterPages(props: RegisterProps) {
 				...value,
 				birthday: moment(value.birthday).format('DD-MM-YYYY'),
 			};
-			dispath(authRegister(payload));
+			dispatch(authRegister(payload));
 		},
 	});
 
