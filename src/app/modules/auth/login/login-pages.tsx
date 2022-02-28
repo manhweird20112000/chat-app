@@ -1,11 +1,12 @@
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { RegisterPages } from '../..';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppDispatch } from 'hooks/hooks';
 import { useHistory } from 'react-router-dom';
 import { signinAsync } from 'app/features/auth/auth-slice';
 import TokenService from 'utils/token-service';
+import { useAuth } from 'hooks';
 
 export function LoginPage() {
 	const [modalRegister, setModalRegister] = useState<Boolean>(false);
@@ -25,7 +26,7 @@ export function LoginPage() {
 				.then((data) => {
 					if (data.payload instanceof Object) {
 						TokenService.setUser(data.payload, 'user');
-						history.replace('/t');
+						history.replace('/');
 					}
 				})
 				.catch((error) => {

@@ -6,13 +6,12 @@ export function useAuth() {
 	function isAuth() {
 		const user = TokenService.getUser('user');
 		if (user) {
-			setIsSignin(true);
+			setIsSignin(!isSigin);
 		}
 	}
 
 	useEffect(() => {
 		isAuth();
-		return () => isAuth();
 	}, []);
 	return {
 		isSigin,

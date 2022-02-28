@@ -1,19 +1,21 @@
 import { useAuth } from 'hooks';
+import { useEffect, useState } from 'react';
 import { Redirect, Route } from 'react-router-dom';
+import TokenService from 'utils/token-service';
 
 export function AuthRoutes(props: any) {
 	const { component: Component, ...rest } = props;
-	const { isSigin } = useAuth();
-	alert(isSigin);
 	return (
 		<Route
 			exact
 			{...rest}
 			render={(props) =>
-				isSigin ? (
+				TokenService.getUser('user') ? (
 					<Component {...props} />
 				) : (
-					<Redirect to={{ pathname: '/', state: { from: props.location } }} />
+					<Redirect
+						to={{ pathname: '/signin', state: { from: props.location } }}
+					/>
 				)
 			}
 		/>
