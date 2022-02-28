@@ -51,7 +51,7 @@ export function Sidebar(props: SidebarProps) {
 				className="overflow-x-hidden overflow-y-auto mt-2"
 				onScroll={handleScrollUserChat}>
 				{chats.map((item) => (
-					<Link key={item.id} to={'/t/' + item.username}>
+					<Link key={item.id} to={'/' + item.username}>
 						<UserChat
 							isOnline={item.online}
 							userId={item.userId}

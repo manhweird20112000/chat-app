@@ -1,12 +1,11 @@
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { RegisterPages } from '../..';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useAppDispatch } from 'hooks/hooks';
 import { useHistory } from 'react-router-dom';
 import { signinAsync } from 'app/features/auth/auth-slice';
 import TokenService from 'utils/token-service';
-import { useAuth } from 'hooks';
 
 export function LoginPage() {
 	const [modalRegister, setModalRegister] = useState<Boolean>(false);

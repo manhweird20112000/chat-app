@@ -65,7 +65,6 @@ export function MainLayout() {
 			</div>
 			<div id="container" className={className}>
 				<ChatRoutes />
-				{/* <HomeRoutes /> */}
 			</div>
 		</div>
 	);
