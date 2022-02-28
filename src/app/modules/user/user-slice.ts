@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { register } from "app/services"
 
 interface UserState {
   id: number,
@@ -19,11 +18,6 @@ const initialState: UserState = {
   user: {}
 }
 
-export const registerAsync = createAsyncThunk('auth/register', async (payload: any) => {
-  const response = await register(payload);
-  console.log(payload)
-  return response
-})
 
 export const userSlice = createSlice({
   name: 'user',
@@ -32,9 +26,7 @@ export const userSlice = createSlice({
 
   },
   extraReducers: builder => {
-    builder.addCase(registerAsync.fulfilled, (state, action) => {
-      state.user = action.payload
-    })
+
   }
 })
 

@@ -3,8 +3,9 @@ import { useFormik } from 'formik';
 import { RegisterPages } from '../..';
 import { useState } from 'react';
 import { useAppDispatch } from 'hooks/hooks';
-import { authLogin } from '../auth-slice';
 import { useHistory } from 'react-router-dom';
+import { signinAsync } from 'app/features/auth/auth-slice';
+import TokenService from 'utils/token-service';
 
 export function LoginPage() {
 	const [modalRegister, setModalRegister] = useState<Boolean>(false);
@@ -20,8 +21,16 @@ export function LoginPage() {
 			password: Yup.string().required().min(6),
 		}),
 		onSubmit: (value) => {
-			dispatch(authLogin(value));
-			history.replace('/t');
+			dispatch(signinAsync(value))
+				.then((data) => {
+					if (data.payload instanceof Object) {
+						TokenService.setUser(data.payload, 'user');
+						history.replace('/t');
+					}
+				})
+				.catch((error) => {
+					console.log(error);
+				});
 		},
 	});
 

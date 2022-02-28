@@ -3,18 +3,17 @@ import { Redirect, Route } from 'react-router-dom';
 
 export function AuthRoutes(props: any) {
 	const { component: Component, ...rest } = props;
-	const { isAuth } = useAuth();
+	const { isSigin } = useAuth();
+	alert(isSigin);
 	return (
 		<Route
 			exact
 			{...rest}
 			render={(props) =>
-				isAuth() ? (
+				isSigin ? (
 					<Component {...props} />
 				) : (
-					<Redirect
-						to={{ pathname: '/', state: { from: props.location } }}
-					/>
+					<Redirect to={{ pathname: '/', state: { from: props.location } }} />
 				)
 			}
 		/>

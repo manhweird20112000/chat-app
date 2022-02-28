@@ -5,7 +5,6 @@ import { IconClose } from 'assets';
 import { RegisterProps } from './register.props';
 import { useAppDispatch } from 'hooks/hooks';
 import moment from 'moment';
-import { authRegister } from '../auth-slice';
 
 export function RegisterPages(props: RegisterProps) {
 	const { hideModal } = props;
@@ -35,7 +34,7 @@ export function RegisterPages(props: RegisterProps) {
 				...value,
 				birthday: moment(value.birthday).format('DD-MM-YYYY'),
 			};
-			dispatch(authRegister(payload));
+			console.log(payload);
 		},
 	});
 

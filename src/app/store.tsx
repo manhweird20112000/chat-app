@@ -1,5 +1,5 @@
 import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit';
-import authReducer from './modules/auth/auth-slice';
+import authReducer from './features/auth/auth-slice';
 import userReducer from './modules/user/user-slice';
 import chatReducer from './modules/chat/chat-slice';
 

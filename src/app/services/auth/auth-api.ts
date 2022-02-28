@@ -1,25 +1,13 @@
+import AxiosRequest from '../AxiosRequest'
+import { API_AUTH_LOGIN, API_AUTH_REGISTER } from './constants'
+import { SigninDTO, SigupDTO } from './dto/auth.interface'
 
-import TokenService from 'utils/token-service';
-import AxiosRequest from '../AxiosRequest';
-import { API_AUTH_LOGIN, API_AUTH_REGISTER } from './constants';
 
-export async function login(payload: any) {
-  return new Promise((resolve, reject) => {
-    AxiosRequest.post(API_AUTH_LOGIN, payload)
-      .then((res) => {
-        TokenService.setUser(res.data.data, 'user')
-        resolve(res.data.data)
-      })
-      .catch((error) => reject(error));
-  });
-}
-
-export async function register(payload: any) {
-  return new Promise((resolve, reject) => {
-    AxiosRequest.post(API_AUTH_REGISTER, payload)
-      .then((res) => {
-        resolve(res.data.data);
-      })
-      .catch((error) => resolve(error))
-  });
+export class AuthService {
+  static signup(payload: SigupDTO) {
+    return AxiosRequest.post(API_AUTH_REGISTER, payload)
+  }
+  static signin(payload: SigninDTO) {
+    return AxiosRequest.post(API_AUTH_LOGIN, payload)
+  }
 }

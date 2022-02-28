@@ -1,16 +1,20 @@
+import { useEffect, useState } from 'react';
 import TokenService from 'utils/token-service';
 
 export function useAuth() {
+	const [isSigin, setIsSignin] = useState<Boolean>(false);
 	function isAuth() {
 		const user = TokenService.getUser('user');
-		console.log(user);
 		if (user) {
-			return true;
-		} else {
-			return false;
+			setIsSignin(true);
 		}
 	}
+
+	useEffect(() => {
+		isAuth();
+		return () => isAuth();
+	}, []);
 	return {
-		isAuth,
+		isSigin,
 	};
 }
