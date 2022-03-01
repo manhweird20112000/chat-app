@@ -32,7 +32,7 @@ export function UserChat(props: UserChatProps) {
 		<div
 			className="p-2 cursor-pointer hover:bg-gray-100 rounded-xl pb-2 flex items-center"
 			onClick={onPress}>
-			<Avatar size={56} uri={avatar} isOnline={isOnline} />
+			<Avatar size={56} uri={avatar || ''} isOnline={isOnline} />
 			<div className="ml-3 xl:block md:hidden xl:w-[79%]">
 				<p className="text-base font-medium">{fullname}</p>
 				<div className="flex items-center justify-between">
@@ -49,9 +49,9 @@ export function UserChat(props: UserChatProps) {
 									? 'font-bold'
 									: 'font-normal'
 							}>
-							{handleMessage(message)}
+							{handleMessage(message || '')}
 						</span>
-						<span className="ml-2 font-normal"> 8 giờ</span>
+						{/* <span className="ml-2 font-normal"> 8 giờ</span> */}
 					</p>
 					<div className="flex items-center">
 						{read_status === EVENT_CHAT.UNREAD && lastUser !== user.id && (

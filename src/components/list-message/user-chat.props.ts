@@ -1,13 +1,13 @@
 export interface UserChatProps {
-  userId: number,
-  avatar: string,
-  fullname: string,
-  username: string,
-  message: string,
-  read_status: string,
+  userId?: number,
+  avatar?: string,
+  fullname?: string,
+  username?: string,
+  message?: string,
+  read_status?: string,
   onlineTime?: string,
-  lastUser: number,
+  lastUser?: number,
   type?: string,
-  isOnline: string,
-  onPress(): void
+  isOnline?: string,
+  onPress?(): void
 }

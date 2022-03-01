@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RoomsServices } from 'app/services';
+import { createRoomDTO } from 'app/services/rooms/dto/rooms.interface';
 import TokenService from 'utils/token-service';
 
 interface Rooms { }
@@ -18,11 +19,9 @@ const initialState: RoomsState = {
   skip: 0,
 };
 
-export const rooms = createAsyncThunk('rooms/list', async () => {
+export const roomsAsync = createAsyncThunk('rooms/list', async () => {
   try {
-    const response = await RoomsServices.get(
-      TokenService.getLocalAccessToken('user')
-    );
+    const response = await RoomsServices.get();
     if (response.data.data instanceof Object) {
       return response.data.data;
     }
@@ -30,6 +29,20 @@ export const rooms = createAsyncThunk('rooms/list', async () => {
     console.log(error);
   }
 });
+
+export const createRoomAsync = createAsyncThunk(
+  'rooms/create',
+  async (payload: createRoomDTO, thunkAPI) => {
+    try {
+      const response = await RoomsServices.create(payload);
+      if (response.data.data instanceof Object) {
+        return response.data.data;
+      }
+    } catch (error) {
+      thunkAPI.rejectWithValue(error)
+    }
+  }
+);
 
 export const roomsSlice = createSlice({
   name: 'rooms',
@@ -41,19 +54,28 @@ export const roomsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(rooms.pending, (state) => {
+      .addCase(roomsAsync.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(rooms.rejected, (state) => {
+      .addCase(roomsAsync.rejected, (state) => {
         state.status = 'failed';
       })
-      .addCase(rooms.fulfilled, (state, action) => {
+      .addCase(roomsAsync.fulfilled, (state, action) => {
         state.rooms = action.payload;
         state.status = 'idle';
+      })
+      .addCase(createRoomAsync.rejected, (state, action) => {
+        state.status = 'failed'
+      })
+      .addCase(createRoomAsync.pending, (state, action) => {
+        state.status = 'loading'
+      })
+      .addCase(createRoomAsync.fulfilled, (state, action) => {
+        state.status = 'idle'
       });
   },
 });
 
-export const { setSkip } = roomsSlice.actions
+export const { setSkip } = roomsSlice.actions;
 
-export default roomsSlice.reducer
+export default roomsSlice.reducer;

@@ -1,18 +1,31 @@
 import { IconArrowLeft, IconSearch, IconThreeDot } from 'assets';
+import React, { useEffect } from 'react';
 import { Avatar, Sidebar } from 'components';
 import { useDimensions } from 'hooks';
-import { useAppSelector } from 'hooks/hooks';
+import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 import { useState } from 'react';
 import { ChatRoutes } from 'routes';
 import './styles.scss';
+import { roomsAsync } from 'app/features/rooms/rooms-slice';
+import { fetchAsyncUsers, setUser } from 'app/features/user/user-slice';
+import TokenService from 'utils/token-service';
+import { Helper } from 'utils/helper';
 
 export function MainLayout() {
-	const user = useAppSelector((state) => state.user);
+	const rooms = useAppSelector((state) => state.rooms.rooms);
+	const { users, user } = useAppSelector((state) => state.user);
+
 	const { width } = useDimensions();
 	const [focus, setFocus] = useState<Boolean>(false);
 	const [isLogout, setIsLogout] = useState<Boolean>(false);
+	const dispatch = useAppDispatch();
 
 	const className = `xl:w-[${Number(width) - 360}px] w-screen `;
+
+	useEffect(() => {
+		dispatch(setUser(TokenService.getUser('user')));
+		dispatch(roomsAsync());
+	}, []);
 
 	return (
 		<div className="flex">
@@ -21,7 +34,7 @@ export function MainLayout() {
 				className="xl:w-[360px]  hidden xl:block md:block pl-2 pr-0.5 border-r-[1px] pb-10 h-screen overflow-y-hidden">
 				<div className="px-2 py-4 flex items-center justify-between">
 					<div className="flex items-center xl:justify-start md:justify-center ">
-						<Avatar size={36} uri={user.avatar} />
+						<Avatar size={36} uri={Helper.renderImage(user.avatar)} />
 						<p className="font-bold text-2xl ml-3 xl:block md:hidden">Chat</p>
 					</div>
 					<div className="relative xl:block hidden lg:block md:hidden">
@@ -54,6 +67,7 @@ export function MainLayout() {
 							type="text"
 							placeholder="Tìm kiếm trên Messenger"
 							className=" bg-gray-100 py-2 pl-9 pr-2 w-full outline-none font-normal text-sm rounded-full"
+							onChange={() => dispatch(fetchAsyncUsers())}
 							onFocus={() => setFocus(true)}
 						/>
 						<span className="absolute top-1/2 -translate-y-1/2 left-4">
@@ -61,7 +75,10 @@ export function MainLayout() {
 						</span>
 					</div>
 				</div>
-				<Sidebar type={focus ? 'CONNECTION' : 'FRIEND'} />
+				<Sidebar
+					type={focus ? 'CONNECTION' : 'FRIEND'}
+					data={focus ? users : rooms}
+				/>
 			</div>
 			<div id="container" className={className}>
 				<ChatRoutes />

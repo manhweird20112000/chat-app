@@ -2,12 +2,13 @@ import { IconThreeDot } from 'assets';
 import { Avatar } from 'components';
 import { useAppSelector } from 'hooks/hooks';
 import { useState } from 'react';
+import TokenService from 'utils/token-service';
 import { MessageProps } from './message.props';
 
 export function Message(props: MessageProps) {
 	const { color, message, userId, avatar } = props;
 	const [option, setOption] = useState<Boolean>(false);
-	const user = useAppSelector((state) => state.user);
+	const user = TokenService.getUser('user');
 	return (
 		<div
 			onMouseOver={() => setOption(true)}
@@ -16,12 +17,7 @@ export function Message(props: MessageProps) {
 			style={{
 				justifyContent: userId !== user.id ? 'flex-start' : 'flex-end',
 			}}>
-			{userId !== user.id && (
-				<Avatar
-					uri={avatar}
-					size={28}
-				/>
-			)}
+			{userId !== user.id && <Avatar uri={avatar} size={28} />}
 			{option && userId === user.id && (
 				<div className="ml-2" onClick={() => console.log('option')}>
 					<div className="hover:bg-gray-200 rounded-full py-0.5 px-0.5 cursor-pointer ">

@@ -1,7 +1,6 @@
 import axios from 'axios';
 import TokenService from 'utils/token-service';
 import { AuthService } from '.';
-import { API_AUTH_LOGIN, API_AUTH_REFRESHTOKEN } from './auth/constants';
 
 const REQUEST_TIMEOUT = 18000;
 
