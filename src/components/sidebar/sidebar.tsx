@@ -1,3 +1,4 @@
+import { rooms } from 'app/features/rooms/rooms-slice';
 import { fetchAsyncUsers } from 'app/features/user/user-slice';
 import { UserChat, UserConnection } from 'components';
 import { useAppDispatch } from 'hooks/hooks';
@@ -40,7 +41,7 @@ export function Sidebar(props: SidebarProps) {
 	}
 
 	useEffect(() => {
-		dispatch(fetchAsyncUsers());
+		dispatch(rooms());
 	}, []);
 
 	if (type === 'FRIEND') {

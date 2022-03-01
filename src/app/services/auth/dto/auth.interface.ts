@@ -1,10 +1,10 @@
 export interface SigupDTO {
   firstName: string,
   lastName: string,
-  gender: 'MALE' | 'FEMALE',
+  gender: 'MALE' | 'FEMALE' | any,
   password: string,
   email: string,
-  birdthday: string
+  birthday: string
 }
 
 export interface SigninDTO {

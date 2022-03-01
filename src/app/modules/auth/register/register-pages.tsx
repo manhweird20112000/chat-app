@@ -5,6 +5,7 @@ import { IconClose } from 'assets';
 import { RegisterProps } from './register.props';
 import { useAppDispatch } from 'hooks/hooks';
 import moment from 'moment';
+import { signupAsync } from 'app/features/auth/auth-slice';
 
 export function RegisterPages(props: RegisterProps) {
 	const { hideModal } = props;
@@ -34,14 +35,13 @@ export function RegisterPages(props: RegisterProps) {
 				...value,
 				birthday: moment(value.birthday).format('DD-MM-YYYY'),
 			};
-			console.log(payload);
+			dispatch(signupAsync(payload)).then((data) => {
+				if (data.payload instanceof Object) {
+					hideModal();
+				}
+			});
 		},
 	});
-
-	// useEffect(() => {
-	// 	console.log('tạo');
-	// 	return () => console.log('clear');
-	// });
 
 	return (
 		<div className="w-screen h-screen flex items-center justify-center">

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import TokenService from 'utils/token-service';
+import { AuthService } from '.';
 import { API_AUTH_LOGIN, API_AUTH_REFRESHTOKEN } from './auth/constants';
 
 const REQUEST_TIMEOUT = 18000;
@@ -16,7 +17,7 @@ instance.interceptors.request.use(
   (config: any) => {
     const token = TokenService.getLocalAccessToken('user');
     if (token) {
-      config.headers['x-access-token'] = token
+      config.headers['Authorization'] = 'Bearer ' + token
     }
 
     return config;
@@ -32,16 +33,16 @@ instance.interceptors.response.use(
   },
   async (error) => {
     const originalConfig = error.config;
-    if (originalConfig.url === API_AUTH_LOGIN && error.response) {
+    console.log(originalConfig)
+    if (error.response) {
       if (error.response.status === 401 && !originalConfig._retry) {
         originalConfig._retry = true;
       }
       try {
-        const response = await instance.post(API_AUTH_REFRESHTOKEN, {
-          refreshToken: TokenService.getLocalRefeshToken('user'),
-        });
+        const response = await AuthService.refreshToken({ refreshToken: TokenService.getLocalRefeshToken('user') })
 
-        const { accessToken } = response.data;
+        const { accessToken } = response.data.data;
+        console.log(response.data.data)
 
         TokenService.updateLocalAccessToken('user', accessToken);
 
