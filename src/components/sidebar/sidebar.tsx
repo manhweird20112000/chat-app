@@ -3,7 +3,7 @@ import { UserChat, UserConnection } from 'components';
 import { useAppDispatch } from 'hooks/hooks';
 import _ from 'lodash';
 import { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Helper } from 'utils/helper';
 import { SidebarProps } from './sidebar.props';
 import './styles.scss';
@@ -13,6 +13,7 @@ export function Sidebar(props: SidebarProps) {
 	const sidebar = useRef<any>(null);
 	const [loading, setLoading] = useState<Boolean>(false);
 	const dispatch = useAppDispatch();
+	const history = useHistory();
 
 	const IMAGE_DEFAUT =
 		'https://i.pinimg.com/564x/c3/08/69/c3086973f6c6601732b7dce0c822ccc5.jpg';
@@ -31,7 +32,13 @@ export function Sidebar(props: SidebarProps) {
 	}
 
 	function selectedUser(item: any): void {
-		dispatch(createRoomAsync({ receiver: item._id }));
+		dispatch(createRoomAsync({ receiver: item._id })).then((data) => {
+			if (data.payload instanceof Object) {
+				if (data.payload.type === 'EXIST') {
+					history.push(`/${item.username}`);
+				}
+			}
+		});
 	}
 
 	useEffect(() => {
