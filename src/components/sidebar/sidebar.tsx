@@ -36,6 +36,8 @@ export function Sidebar(props: SidebarProps) {
 			if (data.payload instanceof Object) {
 				if (data.payload.type === 'EXIST') {
 					history.push(`/${item.username}`);
+				} else {
+					history.push(`/${item.username}`);
 				}
 			}
 		});
