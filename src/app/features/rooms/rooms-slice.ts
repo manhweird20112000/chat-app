@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RoomsServices } from 'app/services';
 import { createRoomDTO } from 'app/services/rooms/dto/rooms.interface';
-import TokenService from 'utils/token-service';
 
 interface Rooms { }
 
