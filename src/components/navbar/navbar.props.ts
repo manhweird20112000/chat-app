@@ -1,3 +1,4 @@
-export interface NavbarProps{
-  
+export interface NavbarProps {
+  fullName: string,
+  avatar: string
 }

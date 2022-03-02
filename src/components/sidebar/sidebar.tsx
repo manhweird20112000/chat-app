@@ -1,9 +1,10 @@
+import { selectedChat } from 'app/features/chat/chat-slice';
 import { createRoomAsync, roomsAsync } from 'app/features/rooms/rooms-slice';
 import { UserChat, UserConnection } from 'components';
 import { useAppDispatch } from 'hooks/hooks';
 import _ from 'lodash';
 import { useEffect, useRef, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Helper } from 'utils/helper';
 import { SidebarProps } from './sidebar.props';
 import './styles.scss';
@@ -18,8 +19,15 @@ export function Sidebar(props: SidebarProps) {
 	const IMAGE_DEFAUT =
 		'https://i.pinimg.com/564x/c3/08/69/c3086973f6c6601732b7dce0c822ccc5.jpg';
 
-	const handleSelector = (user: any) => {
-		console.log('ok');
+	const handleSelector = (item: any) => {
+		const payload = {
+			fullName: item.user.fullName,
+			avatar: IMAGE_DEFAUT,
+			roomId: item.roomId,
+			color: item.color
+		};
+		dispatch(selectedChat(payload));
+		history.push(`/${item.roomId}`);
 	};
 
 	function handleScrollUserChat() {
@@ -56,19 +64,19 @@ export function Sidebar(props: SidebarProps) {
 				onScroll={handleScrollUserChat}>
 				{data.length > 0 &&
 					data.map((item: any, index: number) => (
-						<Link key={index} to={'/' + item.username}>
-							<UserChat
-								fullname={item.user.fullName}
-								username={item.user.username}
-								message={
-									_.isEmpty(item.message)
-										? `Bạn đã kết nối với ${item.user.fullName}`
-										: item.message.messages
-								}
-								avatar={IMAGE_DEFAUT}
-								userId={item.receiver}
-							/>
-						</Link>
+						<UserChat
+							onPress={() => handleSelector(item)}
+							key={index}
+							fullname={item.user.fullName}
+							username={item.user.username}
+							message={
+								_.isEmpty(item.message)
+									? `Bạn đã kết nối với ${item.user.fullName}`
+									: item.message.messages
+							}
+							avatar={IMAGE_DEFAUT}
+							userId={item.receiver}
+						/>
 					))}
 				{loading && (
 					<div className="text-center text-base text-gray-500 font-medium my-2">

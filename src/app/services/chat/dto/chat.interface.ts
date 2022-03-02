@@ -1,6 +1,6 @@
 export interface ListParamsMessages {
-  skip?: number;
-  limit?: number;
+  skip: any;
+  limit: any;
   roomId: string;
 }
 

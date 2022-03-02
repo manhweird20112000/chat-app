@@ -10,6 +10,7 @@ export class ChatServices {
 	static list(params?: ListParamsMessages) {
 		return AxiosRequest.get(API_GET_MESSAGES, {
 			params: params,
+			
 		});
 	}
 
