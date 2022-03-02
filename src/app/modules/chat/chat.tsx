@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { Message, Navbar, TimeLine, ToolBar } from 'components';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
-import { listAsync } from 'app/features/chat/chat-slice';
+import { listAsync, sendAsync } from 'app/features/chat/chat-slice';
+import { useDimensions } from 'hooks';
+import _ from 'lodash';
 
 export function Chat(props: any) {
 	const dispatch = useAppDispatch();
+	const { size } = useDimensions();
 	const { chatSelected, messages } = useAppSelector((state) => state.chat);
 	const [skip, setSkip] = useState<number>(0);
 	const [limit, setLimit] = useState<number>(20);
+	const className = `h-[${
+		size.height === 0 ? window.innerHeight - 125 : Number(size.height) - 125
+	}px]`;
 
 	function clearState() {
 		setLimit(20);
@@ -25,15 +31,24 @@ export function Chat(props: any) {
 		dispatch(listAsync(params));
 	}
 
+	function handleSendMessage(messages: string) {
+		if (_.isNull(messages) || messages.trim() === '') {
+			console.log('nhập input');
+		} else {
+			dispatch(
+				sendAsync({ roomId: chatSelected.roomId, message: messages.trim() })
+			);
+		}
+	}
+
 	useEffect(() => {
 		getListMessages();
-
 		return () => clearState();
 	}, [props.match.params]);
 	return (
-		<div className="">
+		<div className="h-screen">
 			<Navbar fullName={chatSelected.fullName} avatar={chatSelected.avatar} />
-			<div>
+			<div className={className}>
 				{/* <TimeLine /> */}
 				{messages.map((item: any) => (
 					<Message
@@ -46,27 +61,8 @@ export function Chat(props: any) {
 				))}
 			</div>
 			<div>
-				<ToolBar />
+				<ToolBar roomId={chatSelected.roomId} send={handleSendMessage} />
 			</div>
 		</div>
 	);
 }
-
-const listMessage = [
-	{
-		id: 1,
-		message: 'Hello',
-		userId: 1,
-	},
-	{
-		id: 2,
-		message:
-			'IM Possible VS $A Milo VS Cà Nâu - 1, 2, 3 - Team Binz | Rap Việt - Mùa 2 [MV Lyrics]',
-		userId: 1,
-	},
-	{
-		id: 3,
-		message: 'Hello',
-		userId: 5,
-	},
-];

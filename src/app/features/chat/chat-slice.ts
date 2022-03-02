@@ -10,7 +10,7 @@ interface UserSelected {
   fullname: string;
   avatar: string;
   roomId: string;
-  color: string
+  color: string;
 }
 
 interface ChatState {
@@ -67,14 +67,27 @@ export const chatSlice = createSlice({
     },
   },
   extraReducers: (buidler) => {
-    buidler.addCase(listAsync.fulfilled, (state, action) => {
-      state.messages = action.payload;
-      state.status = 'idle';
-    }).addCase(listAsync.rejected, (state) => {
-      state.status = 'failed';
-    }).addCase(listAsync.pending, (state, action) => {
-      state.status = 'loading';
-    });
+    buidler
+      .addCase(listAsync.fulfilled, (state, action) => {
+        state.messages = action.payload;
+        state.status = 'idle';
+      })
+      .addCase(listAsync.rejected, (state) => {
+        state.status = 'failed';
+      })
+      .addCase(listAsync.pending, (state, action) => {
+        state.status = 'loading';
+      })
+      .addCase(sendAsync.fulfilled, (state, action) => {
+        state.messages = [...state.messages, action.payload];
+        state.status = 'idle';
+      })
+      .addCase(sendAsync.pending, (state, action) => {
+        state.status = 'loading';
+      })
+      .addCase(sendAsync.rejected, (state, action) => {
+        state.status = 'failed';
+      });
   },
 });
 

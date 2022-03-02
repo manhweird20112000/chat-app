@@ -15,12 +15,13 @@ export function MainLayout() {
 	const rooms = useAppSelector((state) => state.rooms.rooms);
 	const { users, user } = useAppSelector((state) => state.user);
 
-	const { width } = useDimensions();
+	const { size } = useDimensions();
+
 	const [focus, setFocus] = useState<Boolean>(false);
 	const [isLogout, setIsLogout] = useState<Boolean>(false);
 	const dispatch = useAppDispatch();
 
-	const className = `xl:w-[${Number(width) - 360}px] w-screen `;
+	const className = `xl:w-[${Number(size.width) - 360}px] w-screen `;
 
 	useEffect(() => {
 		dispatch(setUser(TokenService.getUser('user')));
