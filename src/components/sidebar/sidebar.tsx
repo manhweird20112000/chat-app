@@ -22,9 +22,9 @@ export function Sidebar(props: SidebarProps) {
 	const handleSelector = (item: any) => {
 		const payload = {
 			fullName: item.user.fullName,
-			avatar: IMAGE_DEFAUT,
+			avatar: Helper.renderImage(item.user.avatar),
 			roomId: item.roomId,
-			color: item.color
+			color: item.color,
 		};
 		dispatch(selectedChat(payload));
 		history.push(`/${item.roomId}`);
@@ -74,7 +74,7 @@ export function Sidebar(props: SidebarProps) {
 									? `Bạn đã kết nối với ${item.user.fullName}`
 									: item.message.messages
 							}
-							avatar={IMAGE_DEFAUT}
+							avatar={Helper.renderImage(item.user.avatar)}
 							userId={item.receiver}
 						/>
 					))}
