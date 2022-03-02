@@ -4,7 +4,6 @@ import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 import { listAsync, sendAsync } from 'app/features/chat/chat-slice';
 import { useDimensions } from 'hooks';
 import _ from 'lodash';
-import { useHistory } from 'react-router-dom';
 
 export function Chat(props: any) {
 	const dispatch = useAppDispatch();

@@ -25,6 +25,11 @@ export function MainLayout() {
 
 	const className = `xl:w-[${Number(size.width) - 360}px] w-screen `;
 
+	function logout() {
+		localStorage.clear();
+		history.push('/signin');
+	}
+
 	useEffect(() => {
 		history.push('/');
 		dispatch(setUser(TokenService.getUser('user')));
@@ -51,7 +56,7 @@ export function MainLayout() {
 							<div className="modal-main absolute z-50 right-0 top-12 bg-white rounded-lg min-w-[150px] p-1">
 								<div
 									className="cursor-pointer hover:bg-slate-100 p-1.5 rounded-sm"
-									onClick={() => console.log('đăng xuất')}>
+									onClick={() => logout()}>
 									<p className="font-medium text-sm">Đăng xuất</p>
 								</div>
 							</div>
