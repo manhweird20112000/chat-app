@@ -1,5 +1,6 @@
 import { IconTick } from 'assets';
 import { Avatar } from 'components';
+import TokenService from 'utils/token-service';
 import { EVENT_CHAT } from '../../constants';
 import { UserChatProps } from './user-chat.props';
 
@@ -16,9 +17,7 @@ export function UserChat(props: UserChatProps) {
 		lastUser,
 		isOnline,
 	} = props;
-	const user = {
-		id: 10,
-	};
+	const user = TokenService.getUser('user');
 
 	function handleMessage(message: string): string {
 		if (message.length > 25) {

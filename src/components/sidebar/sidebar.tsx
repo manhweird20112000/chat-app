@@ -70,9 +70,9 @@ export function Sidebar(props: SidebarProps) {
 							fullname={item.user.fullName}
 							username={item.user.username}
 							message={
-								_.isEmpty(item.message)
+								_.isEmpty(item.messages)
 									? `Bạn đã kết nối với ${item.user.fullName}`
-									: item.message.messages
+									: item.messages.message
 							}
 							avatar={Helper.renderImage(item.user.avatar)}
 							userId={item.receiver}
