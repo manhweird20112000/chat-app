@@ -2,15 +2,27 @@ import React, { useEffect, useState } from 'react';
 import { Message, Navbar, TimeLine, ToolBar } from 'components';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 import { listAsync, sendAsync } from 'app/features/chat/chat-slice';
-import { useDimensions } from 'hooks';
+import { useDimensions, useSocket } from 'hooks';
 import _ from 'lodash';
 
 export function Chat(props: any) {
 	const dispatch = useAppDispatch();
+	const {
+		joinRoom,
+		connectFriendNew,
+		leave,
+		read,
+		remove,
+		send,
+		special,
+		typing,
+	} = useSocket();
 	const { size } = useDimensions();
 	const { chatSelected, messages } = useAppSelector((state) => state.chat);
+
 	const [skip, setSkip] = useState<number>(0);
 	const [limit, setLimit] = useState<number>(20);
+
 	const className = `h-[${
 		size.height === 0 ? window.innerHeight - 125 : Number(size.height) - 125
 	}px]`;
@@ -42,7 +54,6 @@ export function Chat(props: any) {
 	}
 
 	useEffect(() => {
-	
 		getListMessages();
 		return () => clearState();
 	}, [props.match.params]);

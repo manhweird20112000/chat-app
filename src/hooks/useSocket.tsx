@@ -2,15 +2,11 @@ import { useEffect, useRef } from 'react';
 import io from 'socket.io-client';
 import TokenService from 'utils/token-service';
 
-interface Props {
-	roomId: string;
-}
-
 interface JoinRoomProps {
 	roomId: number;
 }
 
-export function useSocket({ roomId }: Props) {
+export function useSocket() {
 	const user = TokenService.getUser('user');
 	const ref = useRef<any>();
 
