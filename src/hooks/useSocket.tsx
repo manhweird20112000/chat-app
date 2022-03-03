@@ -83,7 +83,7 @@ export function useSocket() {
 		});
 
 		ref.current = socket;
-	}, [roomId]);
+	}, []);
 
 	return {
 		joinRoom,
