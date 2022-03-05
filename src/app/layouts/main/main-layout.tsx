@@ -40,7 +40,7 @@ export function MainLayout() {
 		<div className="flex">
 			<div
 				id="sidebar"
-				className="xl:w-[360px]  hidden xl:block md:block pl-2 pr-0.5 border-r-[1px] pb-10 h-screen overflow-y-hidden">
+				className="xl:min-w-[360px]  hidden xl:block md:block pl-2 pr-0.5 border-r-[1px] pb-10 h-screen overflow-y-hidden">
 				<div className="px-2 py-4 flex items-center justify-between">
 					<div className="flex items-center xl:justify-start md:justify-center ">
 						<Avatar size={36} uri={Helper.renderImage(user.avatar)} />

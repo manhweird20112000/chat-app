@@ -65,17 +65,18 @@ export function Sidebar(props: SidebarProps) {
 				{data.length > 0 &&
 					data.map((item: any, index: number) => (
 						<UserChat
+							lastMessageStatus={item.messages.status}
+							ownerId={item.ownerId}
 							onPress={() => handleSelector(item)}
 							key={index}
-							fullname={item.user.fullName}
-							username={item.user.username}
-							message={
+							fullName={item.user.fullName}
+							lastedUserId={item.messages.ownerId}
+							lastedMessage={
 								_.isEmpty(item.messages)
 									? `Bạn đã kết nối với ${item.user.fullName}`
 									: item.messages.message
 							}
 							avatar={Helper.renderImage(item.user.avatar)}
-							userId={item.receiver}
 						/>
 					))}
 				{loading && (

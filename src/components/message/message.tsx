@@ -27,7 +27,7 @@ export function Message(props: MessageProps) {
 				</div>
 			)}
 			<div
-				className="max-w-[50%]  font-medium text-base py-2 px-3 rounded-xl ml-2"
+				className="max-w-[50%]  font-normal text-base py-2 px-3 rounded-xl ml-2"
 				style={{
 					background: userId !== user.id ? '#e4e6eb' : color,
 					color: userId !== user.id ? 'black' : 'white',

@@ -52,6 +52,7 @@ export function Chat(props: any) {
 	}
 
 	function handleSendMessage(messages: string) {
+	
 		if (_.isNull(messages) || messages.trim() === '') {
 			console.log('nhập input');
 		} else {
