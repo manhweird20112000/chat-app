@@ -32,7 +32,7 @@ export const listAsync = createAsyncThunk(
       const response = await ChatServices.list(params);
 
       if (response.data.statusCode === httpStatus.OK) {
-        return response.data.data;
+        return response.data.data.reverse();
       }
     } catch (error) {
       thunkAPI.rejectWithValue(error);
@@ -65,6 +65,28 @@ export const chatSlice = createSlice({
     selectedChat: (state, action) => {
       state.chatSelected = action.payload;
     },
+    appendMessage: (state, action) => {
+      const exist = state.messages.filter(
+        (object: any) => object._id === action.payload._id
+      );
+      if (exist.length <= 0) {
+        state.messages = [...state.messages, action.payload];
+      }
+    },
+    removeMessage: (state, action) => {
+      const messages = state.messages.filter(
+        (object: any) => object._id !== action.payload.id
+      );
+      state.messages = [...messages];
+    },
+    updateIdMessage: (state, action) => {
+      const messages = state.messages.map((object: any) =>
+        object._id === action.payload.id
+          ? { ...object, _id: action.payload._id }
+          : { ...object }
+      );
+      state.messages = [...messages];
+    },
   },
   extraReducers: (buidler) => {
     buidler
@@ -77,20 +99,11 @@ export const chatSlice = createSlice({
       })
       .addCase(listAsync.pending, (state, action) => {
         state.status = 'loading';
-      })
-      .addCase(sendAsync.fulfilled, (state, action) => {
-        state.messages = [...state.messages, action.payload];
-        state.status = 'idle';
-      })
-      .addCase(sendAsync.pending, (state, action) => {
-        state.status = 'loading';
-      })
-      .addCase(sendAsync.rejected, (state, action) => {
-        state.status = 'failed';
       });
   },
 });
 
-export const { selectedChat } = chatSlice.actions;
+export const { selectedChat, appendMessage, removeMessage, updateIdMessage } =
+  chatSlice.actions;
 
 export default chatSlice.reducer;

@@ -1,0 +1,17 @@
+.container-chat {
+	height: calc(100vh - 125px);
+	overflow: hidden;
+	overflow-y: scroll;
+	transition: all 0.1s ease;
+	&::-webkit-scrollbar-track {
+		background-color: transparent;
+	}
+	&::-webkit-scrollbar {
+		width: 5px;
+		background-color: transparent;
+	}
+	&::-webkit-scrollbar-thumb {
+		border-radius: 100rem;
+		background-color: rgba(128, 128, 128, 0.5);
+	}
+}

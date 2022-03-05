@@ -1,6 +1,9 @@
+import { appendMessage } from 'app/features/chat/chat-slice';
+import { updateMessageLasted } from 'app/features/rooms/rooms-slice';
 import { useEffect, useRef } from 'react';
 import io from 'socket.io-client';
 import TokenService from 'utils/token-service';
+import { useAppDispatch } from './hooks';
 
 interface JoinRoomProps {
 	roomId: number;
@@ -9,6 +12,8 @@ interface JoinRoomProps {
 export function useSocket() {
 	const user = TokenService.getUser('user');
 	const ref = useRef<any>();
+
+	const dispatch = useAppDispatch();
 
 	const joinRoom = (data: JoinRoomProps): void => {
 		ref.current.emit('joinRoom', data);
@@ -19,7 +24,15 @@ export function useSocket() {
 	};
 
 	const send = (data: any): void => {
-		ref.current.emit('send', data);
+		ref.current.emit('send', {
+			...data,
+			ownerId: user.id,
+			user: {
+				avatar: user.avatar,
+				fullname: user.firstName + ' ' + user.lastName,
+				id: user.id,
+			},
+		});
 	};
 
 	const read = (data: any): void => {
@@ -55,11 +68,11 @@ export function useSocket() {
 		});
 
 		socket.on('typing', (data) => {
-			console.log(data);
+			console.log('Đang chat' + data);
 		});
 
 		socket.on('send', (data) => {
-			console.log(data);
+			dispatch(appendMessage(data));
 		});
 
 		socket.on('read', (data) => {
@@ -75,7 +88,7 @@ export function useSocket() {
 		});
 
 		socket.on('sendAll', (data) => {
-			console.log(data);
+			dispatch(updateMessageLasted(data));
 		});
 
 		socket.on('readAll', (data) => {

@@ -23,7 +23,7 @@ export function ToolBar(props: ToolBarProps) {
 					className="flex items-center">
 					<input
 						value={message}
-						className="bg-gray-100 text-sm mr-2 py-1.5 px-4 rounded-2xl outline-none w-10/12"
+						className="bg-gray-100 text-sm mr-2 py-1.5 px-4 rounded-2xl outline-none h-[36px] w-[98%]"
 						type="text"
 						placeholder="Aa"
 						onChange={onChangeInput}
