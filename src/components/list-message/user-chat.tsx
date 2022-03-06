@@ -1,8 +1,5 @@
 import { IconTick } from 'assets';
 import { Avatar } from 'components';
-import { useEffect } from 'react';
-import TokenService from 'utils/token-service';
-import { EVENT_CHAT } from '../../constants';
 import { UserChatProps } from './user-chat.props';
 
 export function UserChat(props: UserChatProps) {
@@ -15,7 +12,6 @@ export function UserChat(props: UserChatProps) {
 		lastedUserId,
 		lastMessageStatus,
 	} = props;
-	const user = TokenService.getUser('user');
 
 	function handleMessage(message: string): string {
 		if (message.length > 25) {
@@ -24,9 +20,6 @@ export function UserChat(props: UserChatProps) {
 			return message;
 		}
 	}
-	useEffect(() => {
-		console.log(user);
-	}, []);
 	return (
 		<div
 			className="p-2 cursor-pointer hover:bg-gray-100 rounded-xl pb-2 flex items-center"

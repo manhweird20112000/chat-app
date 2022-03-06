@@ -27,7 +27,7 @@ export function Sidebar(props: SidebarProps) {
 			color: item.color,
 		};
 		dispatch(selectedChat(payload));
-		history.push(`/${item.roomId}`);
+		history.push(`/${item.user.username}`);
 	};
 
 	function handleScrollUserChat() {

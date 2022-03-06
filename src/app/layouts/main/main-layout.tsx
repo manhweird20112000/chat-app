@@ -1,7 +1,7 @@
 import { IconArrowLeft, IconSearch, IconThreeDot } from 'assets';
 import React, { useEffect } from 'react';
 import { Avatar, Sidebar } from 'components';
-import { useDimensions } from 'hooks';
+import { useDimensions, useSocket } from 'hooks';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 import { useState } from 'react';
 import { ChatRoutes } from 'routes';
@@ -11,6 +11,7 @@ import { fetchAsyncUsers, setUser } from 'app/features/user/user-slice';
 import TokenService from 'utils/token-service';
 import { Helper } from 'utils/helper';
 import { useHistory } from 'react-router-dom';
+import _ from 'lodash';
 
 export function MainLayout() {
 	const rooms = useAppSelector((state) => state.rooms.rooms);
@@ -18,6 +19,7 @@ export function MainLayout() {
 
 	const { size } = useDimensions();
 	const history = useHistory();
+	const { online, offline } = useSocket();
 
 	const [focus, setFocus] = useState<Boolean>(false);
 	const [isLogout, setIsLogout] = useState<Boolean>(false);
@@ -30,10 +32,27 @@ export function MainLayout() {
 		history.push('/signin');
 	}
 
+	function findUserConnection(event: any) {
+		const params = {
+			skip: 0,
+			username: event.target.value,
+			limit: 20,
+		};
+
+		if (params.username.trim() !== '' || !_.isNull(params.username)) {
+			dispatch(fetchAsyncUsers(params));
+		}
+	}
+
 	useEffect(() => {
 		history.push('/');
+		online();
 		dispatch(setUser(TokenService.getUser('user')));
 		dispatch(roomsAsync());
+
+		return () => {
+			offline();
+		};
 	}, []);
 
 	return (
@@ -76,7 +95,7 @@ export function MainLayout() {
 							type="text"
 							placeholder="Tìm kiếm trên Messenger"
 							className=" bg-gray-100 py-2 pl-9 pr-2 w-full outline-none font-normal text-sm rounded-full"
-							onChange={() => dispatch(fetchAsyncUsers())}
+							onChange={(event) => findUserConnection(event)}
 							onFocus={() => setFocus(true)}
 						/>
 						<span className="absolute top-1/2 -translate-y-1/2 left-4">

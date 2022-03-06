@@ -20,7 +20,7 @@ interface UserState {
 
 export const fetchAsyncUsers = createAsyncThunk(
   'user/fetchAsyncUsers',
-  async (params, thunkAPI) => {
+  async (params: any, thunkAPI) => {
     try {
       const response = await UserServices.fetchUser(params);
       if (response.data.data !== null) {

@@ -15,6 +15,14 @@ export function useSocket() {
 
 	const dispatch = useAppDispatch();
 
+	const online = (): void => {
+		ref.current.emit('online', { id: user.id });
+	};
+
+	const offline = (): void => {
+		ref.current.emit('offline', { id: user.id });
+	};
+
 	const joinRoom = (data: JoinRoomProps): void => {
 		ref.current.emit('joinRoom', data);
 	};
@@ -63,6 +71,10 @@ export function useSocket() {
 			transports: ['polling'],
 		});
 
+		socket.on('connected', (data) => {
+			console.log('connected', data);
+		});
+
 		socket.on('connectFriend', (data) => {
 			console.log(data);
 		});
@@ -95,6 +107,14 @@ export function useSocket() {
 			console.log(data);
 		});
 
+		socket.on('userOnline', (data) => {
+			console.log(data);
+		});
+
+		socket.on('userOffline', (data) => {
+			console.log(data);
+		});
+
 		ref.current = socket;
 	}, []);
 
@@ -107,5 +127,7 @@ export function useSocket() {
 		special,
 		leave,
 		remove,
+		online,
+		offline,
 	};
 }
