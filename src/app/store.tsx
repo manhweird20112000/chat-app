@@ -3,6 +3,8 @@ import authReducer from './features/auth/auth-slice';
 import userReducer from './features/user/user-slice';
 import chatReducer from './features/chat/chat-slice';
 import roomsReducer from './features/rooms/rooms-slice';
+import createSagaMiddleware from 'redux-saga';
+
 
 const rootStore = {
 	reducer: {

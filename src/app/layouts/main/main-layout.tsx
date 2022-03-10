@@ -29,6 +29,7 @@ export function MainLayout() {
 
 	function logout() {
 		localStorage.clear();
+		offline();
 		history.push('/signin');
 	}
 

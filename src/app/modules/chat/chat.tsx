@@ -6,6 +6,7 @@ import { useDimensions, useSocket } from 'hooks';
 import _ from 'lodash';
 import TokenService from 'utils/token-service';
 import moment from 'moment-timezone';
+import { Helper } from 'utils/helper';
 import './style.scss';
 
 export function Chat(props: any) {
@@ -52,7 +53,6 @@ export function Chat(props: any) {
 	}
 
 	function handleSendMessage(messages: string) {
-	
 		if (_.isNull(messages) || messages.trim() === '') {
 			console.log('nhập input');
 		} else {
@@ -79,7 +79,7 @@ export function Chat(props: any) {
 				{/* <TimeLine /> */}
 				{messages.map((item: any, index: number) => (
 					<Message
-						avatar="https://i.pinimg.com/564x/aa/e3/91/aae39130ea0941683983b51a33f689b8.jpg"
+						avatar={Helper.renderImage(item.user.avatar)}
 						key={index}
 						message={item.message}
 						userId={item.ownerId}
