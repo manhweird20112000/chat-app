@@ -8,14 +8,13 @@ interface User {
   username: string;
   gender: 'MALE' | 'FEMALE';
   status: 'ACTIVE' | 'INACTIVE';
-
 }
 
 interface UserState {
   users: User[];
   status: 'idle' | 'loading' | 'failed';
   error: string;
-  user: any
+  user: any;
 }
 
 export const fetchAsyncUsers = createAsyncThunk(
@@ -24,10 +23,22 @@ export const fetchAsyncUsers = createAsyncThunk(
     try {
       const response = await UserServices.fetchUser(params);
       if (response.data.data !== null) {
-        return response.data.data
+        return response.data.data;
       }
     } catch (error) {
-      thunkAPI.rejectWithValue(error)
+      thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const avatarAsync = createAsyncThunk(
+  'user/avatarAsync',
+  async (payload: any, thunkAPI) => {
+    try {
+      const response = await UserServices.updateAvatar(payload);
+      return response.data;
+    } catch (error) {
+      thunkAPI.rejectWithValue(error);
     }
   }
 );
@@ -36,7 +47,7 @@ const initialState: UserState = {
   users: [],
   status: 'idle',
   error: '',
-  user: {}
+  user: {},
 };
 
 export const userSlice = createSlice({
@@ -44,23 +55,27 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action) => {
-      state.user = action.payload
-    }
+      state.user = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchAsyncUsers.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(fetchAsyncUsers.fulfilled, (state, actions: PayloadAction<any>) => {
-        state.status = 'idle';
-        state.users = actions.payload;
-      }).addCase(fetchAsyncUsers.rejected, (state) => {
+      .addCase(
+        fetchAsyncUsers.fulfilled,
+        (state, actions: PayloadAction<any>) => {
+          state.status = 'idle';
+          state.users = actions.payload;
+        }
+      )
+      .addCase(fetchAsyncUsers.rejected, (state) => {
         state.status = 'failed';
       });
   },
 });
 
-export const { setUser } = userSlice.actions
+export const { setUser } = userSlice.actions;
 
-export default userSlice.reducer
+export default userSlice.reducer;

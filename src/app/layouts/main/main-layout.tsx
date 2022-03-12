@@ -1,5 +1,5 @@
 import { IconArrowLeft, IconSearch, IconThreeDot } from 'assets';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Avatar, Sidebar } from 'components';
 import { useDimensions, useSocket } from 'hooks';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
@@ -7,13 +7,20 @@ import { useState } from 'react';
 import { ChatRoutes } from 'routes';
 import './styles.scss';
 import { roomsAsync } from 'app/features/rooms/rooms-slice';
-import { fetchAsyncUsers, setUser } from 'app/features/user/user-slice';
+import {
+	avatarAsync,
+	fetchAsyncUsers,
+	setUser,
+} from 'app/features/user/user-slice';
 import TokenService from 'utils/token-service';
 import { Helper } from 'utils/helper';
 import { useHistory } from 'react-router-dom';
 import _ from 'lodash';
+import { setError, setProcess } from 'app/features/toast/toast-slice';
 
 export function MainLayout() {
+	const avatar = useRef<any>(null);
+
 	const rooms = useAppSelector((state) => state.rooms.rooms);
 	const { users, user } = useAppSelector((state) => state.user);
 
@@ -23,6 +30,8 @@ export function MainLayout() {
 
 	const [focus, setFocus] = useState<Boolean>(false);
 	const [isLogout, setIsLogout] = useState<Boolean>(false);
+	const [sidebar, setSidebar] = useState(false);
+
 	const dispatch = useAppDispatch();
 
 	const className = `xl:w-[${Number(size.width) - 360}px] w-screen `;
@@ -40,9 +49,31 @@ export function MainLayout() {
 			limit: 20,
 		};
 
-		if (params.username.trim() !== '' || !_.isNull(params.username)) {
+		if (event.target.value.trim() !== '' || !_.isNull(event.target.value)) {
 			dispatch(fetchAsyncUsers(params));
 		}
+	}
+
+	function updateAvatar() {
+		avatar.current.click();
+	}
+
+	function handleUploadFile(event: any) {
+		const formData = new FormData();
+		formData.append('avatar', event.target.files[0]);
+		dispatch(setProcess());
+		dispatch(avatarAsync(formData)).then((res) => {
+			if (res.payload.data instanceof Object) {
+				TokenService.updateProperties('avatar', res.payload.data.avatar);
+				dispatch(
+					setError({
+						type: 'success',
+						content: 'Cập nhật ảnh đại diện thành công',
+						title: 'Thông báo',
+					})
+				);
+			}
+		});
 	}
 
 	useEffect(() => {
@@ -59,21 +90,45 @@ export function MainLayout() {
 	return (
 		<div className="flex">
 			<div
+				className="absolute bottom-10 left-0 z-10"
+				onClick={() => setSidebar(!sidebar)}>
+				<div
+					style={{ width: '20px', height: '20px' }}
+					className="bg-red-600"></div>
+			</div>
+			<div
 				id="sidebar"
-				className="xl:min-w-[360px]  hidden xl:block md:block pl-2 pr-0.5 border-r-[1px] pb-10 h-screen overflow-y-hidden">
+				className={`xl:min-w-[360px] bg-white xl:max-w-[360px] w-full absolute ${
+					sidebar ? 'translate-x-0' : '-translate-x-full'
+				} xl:translate-x-0 lg:translate-x-0 md:translate-x-0 xl:relative xl:block md:block pl-2 pr-0.5 border-r-[1px] pb-10 h-screen overflow-y-hidden`}>
 				<div className="px-2 py-4 flex items-center justify-between">
 					<div className="flex items-center xl:justify-start md:justify-center ">
-						<Avatar size={36} uri={Helper.renderImage(user.avatar)} />
+						<Avatar
+							size={36}
+							uri={Helper.renderImage(user.avatar)}
+							onPress={() => console.log('Xem ảnh đại diện')}
+						/>
 						<p className="font-bold text-2xl ml-3 xl:block md:hidden">Chat</p>
 					</div>
-					<div className="relative xl:block hidden lg:block md:hidden">
+					<div className="relative">
 						<span
 							className="flex items-center justify-center cursor-pointer w-[35px] h-[35px] hover:bg-gray-100 rounded-full rotate-90"
 							onClick={() => setIsLogout(!isLogout)}>
 							<IconThreeDot size={30} />
 						</span>
 						{isLogout && (
-							<div className="modal-main absolute z-50 right-0 top-12 bg-white rounded-lg min-w-[150px] p-1">
+							<div className="modal-main absolute z-50 right-0 top-12 bg-white rounded-lg min-w-[200px] p-1">
+								<div
+									className="cursor-pointer hover:bg-slate-100 p-1.5 rounded-sm"
+									onClick={() => updateAvatar()}>
+									<p className="font-medium text-sm">Cập nhật ảnh đại diện</p>
+									<input
+										type="file"
+										className="hidden"
+										ref={avatar}
+										onChange={(event) => handleUploadFile(event)}
+									/>
+								</div>
 								<div
 									className="cursor-pointer hover:bg-slate-100 p-1.5 rounded-sm"
 									onClick={() => logout()}>

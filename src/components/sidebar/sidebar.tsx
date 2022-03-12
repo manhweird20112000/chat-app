@@ -40,13 +40,16 @@ export function Sidebar(props: SidebarProps) {
 	}
 
 	function selectedUser(item: any): void {
+		// const payload = {
+		// 	fullName: item.firstName + ' ' + item.lastName,
+		// 	avatar: Helper.renderImage(item.user.avatar),
+		// 	roomId: item.roomId,
+		// 	color: item.color,
+		// };
+		// dispatch(selectedChat(payload));
 		dispatch(createRoomAsync({ receiver: item._id })).then((data) => {
 			if (data.payload instanceof Object) {
-				if (data.payload.type === 'EXIST') {
-					history.push(`/${item.username}`);
-				} else {
-					history.push(`/${item.username}`);
-				}
+				history.push(`/${item.username}`);
 			}
 		});
 	}

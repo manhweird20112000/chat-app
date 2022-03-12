@@ -32,7 +32,9 @@ export function Toast() {
 
 	if (hide) {
 		return (
-			<div className="toast absolute top-0 right-0 md:top-2 md:right-2 lg:top-2 lg:right-2 xl:top-2 xl:right-2 bg-white p-2 rounded-md w-full xl:w-[380px] lg:w-[380px] md:w-[380px]">
+			<div
+				style={{ boxShadow: '5px 5px 15px 0px rgba(0,0,0,0.1)' }}
+				className="toast absolute top-0 right-0 md:top-2 md:right-2 lg:top-2 lg:right-2 xl:top-2 xl:right-2 bg-white p-2 rounded-md w-full xl:w-[380px] lg:w-[380px] md:w-[380px]">
 				{type === 'process' && (
 					<div id="processing" className="flex items-center p-2">
 						<div className="mr-3">
