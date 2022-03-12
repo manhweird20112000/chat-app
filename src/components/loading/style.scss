@@ -1,0 +1,19 @@
+.loading {
+	// width: 80px;
+	// height: 80px;
+	// border-width: 10px;
+	// border-style: solid;
+	// border-color: #0052ec transparent #0052ec #0052ec;
+	border-radius: 100rem;
+	animation: loading linear 1s infinite backwards;
+	position: relative;
+}
+
+@keyframes loading {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}

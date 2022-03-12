@@ -3,8 +3,8 @@ import authReducer from './features/auth/auth-slice';
 import userReducer from './features/user/user-slice';
 import chatReducer from './features/chat/chat-slice';
 import roomsReducer from './features/rooms/rooms-slice';
+import toastReducer from './features/toast/toast-slice';
 import createSagaMiddleware from 'redux-saga';
-
 
 const rootStore = {
 	reducer: {
@@ -12,6 +12,7 @@ const rootStore = {
 		user: userReducer,
 		chat: chatReducer,
 		rooms: roomsReducer,
+		toast: toastReducer,
 	},
 };
 
