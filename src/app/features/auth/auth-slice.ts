@@ -20,13 +20,7 @@ export const signupAsync = createAsyncThunk(
 		try {
 
 			const response = await AuthService.signup(payload);
-			if (
-				response.data.data instanceof Object &&
-				!_.isNull(response.data.data)
-			) {
-
-				return response.data.data;
-			}
+			return response.data
 		} catch (error) {
 			thunkAPI.rejectWithValue(error)
 		}
@@ -38,13 +32,7 @@ export const signinAsync = createAsyncThunk(
 	async (payload: SigninDTO, thunkAPI) => {
 		try {
 			const response = await AuthService.signin(payload);
-			if (
-				response.data.data instanceof Object &&
-				!_.isNull(response.data.data)
-			) {
-
-				return response.data.data;
-			}
+			return response.data;
 		} catch (error) {
 			thunkAPI.rejectWithValue(error)
 		}

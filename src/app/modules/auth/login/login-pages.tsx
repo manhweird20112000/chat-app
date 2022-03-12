@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { signinAsync } from 'app/features/auth/auth-slice';
 import TokenService from 'utils/token-service';
 import { setClose, setError, setProcess } from 'app/features/toast/toast-slice';
+import _ from 'lodash';
 
 export function LoginPage() {
 	const [modalRegister, setModalRegister] = useState<Boolean>(false);
@@ -22,15 +23,31 @@ export function LoginPage() {
 			password: Yup.string().required().min(6),
 		}),
 		onSubmit: (value) => {
+			dispatch(setProcess());
 			dispatch(signinAsync(value))
-				.then((data) => {
-					if (data.payload instanceof Object) {
-						TokenService.setUser(data.payload, 'user');
+				.then((res) => {
+					if (res.payload instanceof Object && !_.isNull(res.payload.data)) {
+						TokenService.setUser(res.payload.data, 'user');
+						dispatch(setClose());
 						history.replace('/');
+					} else {
+						dispatch(
+							setError({
+								type: 'warning',
+								title: 'Thông báo',
+								content: res.payload.message,
+							})
+						);
 					}
 				})
 				.catch((error) => {
-					console.log(error);
+					dispatch(
+						setError({
+							type: 'danger',
+							title: 'Thông báo',
+							content: 'Không thể đăng nhập lúc này.',
+						})
+					);
 				});
 		},
 	});

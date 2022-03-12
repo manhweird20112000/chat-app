@@ -6,6 +6,7 @@ import { RegisterProps } from './register.props';
 import { useAppDispatch } from 'hooks/hooks';
 import moment from 'moment';
 import { signupAsync } from 'app/features/auth/auth-slice';
+import { setError, setProcess } from 'app/features/toast/toast-slice';
 
 export function RegisterPages(props: RegisterProps) {
 	const { hideModal } = props;
@@ -31,13 +32,30 @@ export function RegisterPages(props: RegisterProps) {
 		}),
 
 		onSubmit: (value) => {
+			dispatch(setProcess());
 			const payload = {
 				...value,
 				birthday: moment(value.birthday).format('DD-MM-YYYY'),
 			};
-			dispatch(signupAsync(payload)).then((data) => {
-				if (data.payload instanceof Object) {
+			dispatch(signupAsync(payload)).then((res) => {
+				console.log(res);
+				if (res.payload.data instanceof Object) {
 					hideModal();
+					dispatch(
+						setError({
+							type: 'success',
+							title: 'Thông báo',
+							content: 'Đăng ký tài khoản thành công',
+						})
+					);
+				} else {
+					dispatch(
+						setError({
+							type: 'warning',
+							title: 'Thông báo',
+							content: res.payload.message,
+						})
+					);
 				}
 			});
 		},
