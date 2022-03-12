@@ -44,9 +44,9 @@ export function RegisterPages(props: RegisterProps) {
 	});
 
 	return (
-		<div className="w-screen h-screen flex items-center justify-center">
+		<div className="w-screen h-screen flex items-center justify-center xl:px-0 lg:px-0 md:px-0 px-5">
 			<div
-				className="w-[432px] bg-white rounded-lg"
+				className="xl:w-[432px] lg:w-[432px] md:w-[432px] w-full  bg-white rounded-lg"
 				style={{ boxShadow: '2px 5px 15px 1px rgba(0, 0,0, 0.2)' }}>
 				<div className="px-3 pt-2 py-1 relative">
 					<p className="font-bold text-3xl">Đăng ký</p>
