@@ -90,7 +90,7 @@ export function MainLayout() {
 	return (
 		<div className="flex">
 			<div
-				className="absolute bottom-10 left-0 z-10"
+				className="absolute bottom-10 left-0 z-10 xl:hidden lg:hidden md:hidden block"
 				onClick={() => setSidebar(!sidebar)}>
 				<div
 					style={{ width: '20px', height: '20px' }}
