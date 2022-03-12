@@ -6,6 +6,7 @@ import { useAppDispatch } from 'hooks/hooks';
 import { useHistory } from 'react-router-dom';
 import { signinAsync } from 'app/features/auth/auth-slice';
 import TokenService from 'utils/token-service';
+import { setClose, setError, setProcess } from 'app/features/toast/toast-slice';
 
 export function LoginPage() {
 	const [modalRegister, setModalRegister] = useState<Boolean>(false);

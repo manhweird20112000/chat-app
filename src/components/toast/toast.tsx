@@ -32,7 +32,7 @@ export function Toast() {
 
 	if (hide) {
 		return (
-			<div className="toast absolute top-1 right-2 bg-white p-2 rounded-md w-full xl:w-[380px] lg:w-[380px] md:w-[380px]">
+			<div className="toast absolute top-0 right-0 md:top-2 md:right-2 lg:top-2 lg:right-2 xl:top-2 xl:right-2 bg-white p-2 rounded-md w-full xl:w-[380px] lg:w-[380px] md:w-[380px]">
 				{type === 'process' && (
 					<div id="processing" className="flex items-center p-2">
 						<div className="mr-3">
@@ -51,17 +51,17 @@ export function Toast() {
 								{renderIcon(type)}
 								<p
 									style={{ color: renderCss(type) }}
-									className={`text-lg font-medium  mx-2`}>
+									className={`text-base font-medium  mx-2`}>
 									{title}
 								</p>
 							</div>
 							<div
 								className="cursor-pointer"
-								onClick={() => dispatch(setClose)}>
+								onClick={() => dispatch(setClose())}>
 								<IconClose size={35} />
 							</div>
 						</div>
-						<p className="mt-2 ml-1 font-normal text-xl text-gray-700">
+						<p className="mt-1 ml-1 font-normal text-base text-gray-700">
 							{content}
 						</p>
 					</div>

@@ -24,11 +24,11 @@ export const toastSlice = createSlice({
       state.type = action.payload.type
       state.content = action.payload.content
     },
-    setProcess: (state, action) => {
+    setProcess: (state) => {
       state.hide = true
       state.type = 'process'
     },
-    setClose: (state, action) => {
+    setClose: (state) => {
       state.hide = false
     },
   }
