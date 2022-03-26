@@ -3,10 +3,12 @@ import { useState } from 'react';
 import { ToolBarProps } from './tool-bar.props';
 import { Picker } from 'emoji-mart';
 import 'emoji-mart/css/emoji-mart.css';
+import { useAppSelector } from 'hooks/hooks';
 
 export function ToolBar(props: ToolBarProps) {
 	const { send } = props;
 	const [message, setMessage] = useState<string>('');
+	const roomSelected = useAppSelector((state) => state.chat.chatSelected);
 	const [func, setFunc] = useState({
 		emoji: false,
 	});
@@ -68,7 +70,7 @@ export function ToolBar(props: ToolBarProps) {
 						<button
 							type="submit"
 							className="hover:bg-gray-100 rounded-full py-1 px-1 flex items-center justify-center">
-							<IconSend size={30} color="#0084ff" />
+							<IconSend size={30} color={roomSelected.color} />
 						</button>
 					</div>
 				</form>

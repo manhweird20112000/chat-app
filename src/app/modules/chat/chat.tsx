@@ -29,7 +29,6 @@ export function Chat(props: any) {
 		typing,
 		trigger,
 	} = useSocket();
-	const { size } = useDimensions();
 	const { chatSelected, messages } = useAppSelector((state) => state.chat);
 
 	const [skip, setSkip] = useState<number>(0);
@@ -100,7 +99,7 @@ export function Chat(props: any) {
 							key={index}
 							message={item.message}
 							userId={item.ownerId}
-							color={'#0084ff'}
+							color={chatSelected.color}
 						/>
 					))}
 				</div>
