@@ -16,6 +16,12 @@ export function DetailChat() {
 				<SelectOption label="Tùy chỉnh đoạn chat">
 					<OptionItem label="Đổi tên" />
 				</SelectOption>
+				<SelectOption label="File phương tiện, file và liên kết">
+					<OptionItem label="File phương tiện" />
+				</SelectOption>
+				<SelectOption label="Quyền riêng tư & hỗ trợ">
+					<OptionItem label="Chặn" />
+				</SelectOption>
 			</div>
 		</div>
 	);

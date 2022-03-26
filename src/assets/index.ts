@@ -10,5 +10,6 @@ export * from './icons/icon-danger'
 export * from './icons/icon-warning'
 export * from './icons/icon-emoji'
 export * from './icons/icon-arrow-down'
+export * from './icons/icon-arrow-up'
 
 // image
