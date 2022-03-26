@@ -4,3 +4,4 @@ export * from './auth/register/register-pages'
 // home
 export * from './chat/chat'
 export * from './overview/overview'
+export * from './detail/detail-chat'

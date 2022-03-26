@@ -1,3 +1,4 @@
+import TokenService from 'utils/token-service';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { ChatServices } from 'app/services';
 import {
@@ -53,10 +54,32 @@ export const sendAsync = createAsyncThunk(
     }
   }
 );
-// export const deleteAsync = createAsyncThunk(
-//   'message/delete',
-//   async (thunkAPI) => { }
-// );
+
+export const readAsync = createAsyncThunk(
+  'message/read',
+  async (roomId: string, thunkAPI) => {
+    try {
+      const response = await ChatServices.read(roomId);
+      return response.data;
+    } catch (error) {
+      thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const deleteAsync = createAsyncThunk(
+  'message/delete',
+  async (idMessage: string, thunkAPI) => {
+    try {
+      const response = await ChatServices.delete(idMessage);
+      return response.data;
+    } catch (error) {
+      thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+const user = TokenService.getUser('user')
 
 export const chatSlice = createSlice({
   name: 'chat',
@@ -99,6 +122,28 @@ export const chatSlice = createSlice({
       })
       .addCase(listAsync.pending, (state, action) => {
         state.status = 'loading';
+      })
+      .addCase(readAsync.fulfilled, (state, action) => {
+        state.status = 'idle'
+        state.messages = state.messages.map((object: any) =>
+          object.ownerId !== user.id && object.status !== 'READ'
+            ? { ...object, status: 'READ' }
+            : object
+        );
+      })
+      .addCase(readAsync.rejected, (state, action) => {
+        state.status = 'failed'
+      }).addCase(readAsync.pending, (state, action) => {
+        state.status = 'loading'
+      })
+      .addCase(deleteAsync.rejected, (state, action) => {
+        state.status = 'failed'
+      }).addCase(deleteAsync.pending, (state, action) => {
+        state.status = 'loading'
+      })
+      .addCase(deleteAsync.fulfilled, (state, action) => {
+        state.status = 'idle';
+        state.messages = state.messages.filter((object: any) => object._id !== action.payload.id)
       });
   },
 });

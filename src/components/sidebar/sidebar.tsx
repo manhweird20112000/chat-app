@@ -63,7 +63,7 @@ export function Sidebar(props: SidebarProps) {
 			<div
 				ref={sidebar}
 				id="list-user-chat"
-				className="overflow-x-hidden overflow-y-auto mt-2"
+				className="overflow-x-hidden overflow-y-auto mt-2 pr-1.5"
 				onScroll={handleScrollUserChat}>
 				{data.length > 0 &&
 					data.map((item: any, index: number) => (
@@ -94,7 +94,7 @@ export function Sidebar(props: SidebarProps) {
 			<div
 				ref={sidebar}
 				id="list-user-chat"
-				className="overflow-x-hidden overflow-y-auto mt-2"
+				className="overflow-x-hidden overflow-y-auto mt-2 pr-1.5"
 				onScroll={handleScrollUserChat}>
 				{data.length > 0 &&
 					data.map((item: any, index: number) => (

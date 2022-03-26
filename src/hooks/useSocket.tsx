@@ -1,6 +1,6 @@
 import { appendMessage } from 'app/features/chat/chat-slice';
 import { updateMessageLasted } from 'app/features/rooms/rooms-slice';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import io from 'socket.io-client';
 import TokenService from 'utils/token-service';
 import { useAppDispatch } from './hooks';
@@ -10,6 +10,7 @@ interface JoinRoomProps {
 }
 
 export function useSocket() {
+	let [trigger, setTrigger] = useState(0);
 	const user = TokenService.getUser('user');
 	const ref = useRef<any>();
 
@@ -85,6 +86,8 @@ export function useSocket() {
 
 		socket.on('send', (data) => {
 			dispatch(appendMessage(data));
+			trigger++;
+			setTrigger(trigger);
 		});
 
 		socket.on('read', (data) => {
@@ -129,5 +132,6 @@ export function useSocket() {
 		remove,
 		online,
 		offline,
+		trigger,
 	};
 }

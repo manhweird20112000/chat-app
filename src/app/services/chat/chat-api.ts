@@ -2,6 +2,7 @@ import AxiosRequest from '../AxiosRequest';
 import {
 	API_DELETE_MESSAGE,
 	API_GET_MESSAGES,
+	API_READ_MESSAGE,
 	API_SEND_MESSAGE,
 } from './constants';
 import { ListParamsMessages, SendMessage } from './dto/chat.interface';
@@ -10,7 +11,7 @@ export class ChatServices {
 	static list(params?: ListParamsMessages) {
 		return AxiosRequest.get(API_GET_MESSAGES, {
 			params: params,
-			
+
 		});
 	}
 
@@ -24,5 +25,9 @@ export class ChatServices {
 				id: idMessage,
 			},
 		});
+	}
+
+	static read(roomId: string) {
+		return AxiosRequest.post(API_READ_MESSAGE, { roomId: roomId })
 	}
 }

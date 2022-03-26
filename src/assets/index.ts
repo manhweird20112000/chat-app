@@ -8,5 +8,7 @@ export * from './icons/icons-arrow-left'
 export * from './icons/icon-success'
 export * from './icons/icon-danger'
 export * from './icons/icon-warning'
+export * from './icons/icon-emoji'
+export * from './icons/icon-arrow-down'
 
 // image

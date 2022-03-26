@@ -1,13 +1,20 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {
+	useCallback,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from 'react';
 import { Message, Navbar, TimeLine, ToolBar } from 'components';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
-import { listAsync, sendAsync } from 'app/features/chat/chat-slice';
+import { listAsync, readAsync, sendAsync } from 'app/features/chat/chat-slice';
 import { useDimensions, useSocket } from 'hooks';
 import _ from 'lodash';
 import TokenService from 'utils/token-service';
 import moment from 'moment-timezone';
 import { Helper } from 'utils/helper';
 import './style.scss';
+import { DetailChat } from '../detail/detail-chat';
 
 export function Chat(props: any) {
 	const dispatch = useAppDispatch();
@@ -20,6 +27,7 @@ export function Chat(props: any) {
 		send,
 		special,
 		typing,
+		trigger,
 	} = useSocket();
 	const { size } = useDimensions();
 	const { chatSelected, messages } = useAppSelector((state) => state.chat);
@@ -37,13 +45,19 @@ export function Chat(props: any) {
 		chat.current.scrollTop = chat.current.scrollHeight;
 	}
 
+	const receiverMessage = useCallback(() => {
+		setTimeout(() => {
+			scrollBottom();
+		}, 400);
+	}, [trigger]);
+
 	function getListMessages() {
-		console.log('get list');
 		const params = { roomId: chatSelected.roomId, skip: skip, limit: limit };
 		if (Object.keys(chatSelected).length > 0) {
 			dispatch(listAsync(params))
 				.then((data) => {
 					joinRoom({ roomId: chatSelected.roomId });
+					dispatch(readAsync(chatSelected.roomId));
 					scrollBottom();
 				})
 				.catch((error) => {
@@ -63,7 +77,9 @@ export function Chat(props: any) {
 					send(data.payload);
 				})
 				.then(() => {
-					scrollBottom();
+					setTimeout(() => {
+						scrollBottom();
+					}, 400);
 				});
 		}
 	}
@@ -73,22 +89,27 @@ export function Chat(props: any) {
 		return () => clearState();
 	}, [chatSelected]);
 	return (
-		<div className="h-screen">
-			<Navbar fullName={chatSelected.fullName} avatar={chatSelected.avatar} />
-			<div className="container-chat" ref={chat}>
-				{/* <TimeLine /> */}
-				{messages.map((item: any, index: number) => (
-					<Message
-						avatar={Helper.renderImage(item.user.avatar)}
-						key={index}
-						message={item.message}
-						userId={item.ownerId}
-						color={'#0084ff'}
-					/>
-				))}
+		<div className="h-screen flex">
+			<div className="chat border overflow-hidden">
+				<Navbar fullName={chatSelected.fullName} avatar={chatSelected.avatar} />
+				<div className="container-chat" ref={chat}>
+					{/* <TimeLine /> */}
+					{messages.map((item: any, index: number) => (
+						<Message
+							avatar={Helper.renderImage(item.user.avatar)}
+							key={index}
+							message={item.message}
+							userId={item.ownerId}
+							color={'#0084ff'}
+						/>
+					))}
+				</div>
+				<div>
+					<ToolBar roomId={chatSelected.roomId} send={handleSendMessage} />
+				</div>
 			</div>
-			<div>
-				<ToolBar roomId={chatSelected.roomId} send={handleSendMessage} />
+			<div className="w-[380px]">
+				<DetailChat />
 			</div>
 		</div>
 	);
