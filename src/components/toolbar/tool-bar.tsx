@@ -65,7 +65,6 @@ export function ToolBar(props: ToolBarProps) {
 							</div>
 						</div>
 					</div>
-
 					<div className="flex items-center justify-center w-[5%]">
 						<button
 							type="submit"

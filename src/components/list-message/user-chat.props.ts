@@ -6,4 +6,5 @@ export interface UserChatProps {
   fullName: string,
   avatar: string,
   lastMessageStatus: string,
+  username: string
 }

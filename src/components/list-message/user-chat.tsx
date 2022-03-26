@@ -1,5 +1,6 @@
 import { IconTick } from 'assets';
 import { Avatar } from 'components';
+import { useRouteMatch } from 'react-router-dom';
 import { UserChatProps } from './user-chat.props';
 
 export function UserChat(props: UserChatProps) {
@@ -11,7 +12,15 @@ export function UserChat(props: UserChatProps) {
 		lastedMessage,
 		lastedUserId,
 		lastMessageStatus,
+		username,
 	} = props;
+
+	console.log(username);
+
+	const match = useRouteMatch({
+		path: `/${username}`,
+		exact: true,
+	});
 
 	function handleMessage(message: string): string {
 		if (message.length > 25) {
@@ -22,7 +31,8 @@ export function UserChat(props: UserChatProps) {
 	}
 	return (
 		<div
-			className="p-2 cursor-pointer hover:bg-gray-100 rounded-xl pb-2 flex items-center"
+			style={{ backgroundColor: match ? '#8080801a' : 'transparent' }}
+			className="p-2 cursor-pointer hover:bg-gray-100 rounded-xl pb-2 flex items-center my-1"
 			onClick={onPress}>
 			<Avatar size={56} uri={avatar || ''} isOnline={'ONLINE'} />
 			<div className="ml-3 xl:block md:hidden xl:w-[79%]">

@@ -1,6 +1,7 @@
 import { IconColor, IconDanger, IconImage } from 'assets';
 import { Avatar, OptionItem, SelectOption } from 'components';
 import { useAppSelector } from 'hooks/hooks';
+import { ColorsPicker } from '../color-picker/colors-picker';
 
 export function DetailChat() {
 	const subject = useAppSelector((state) => state.chat.chatSelected);
@@ -73,6 +74,9 @@ export function DetailChat() {
 					);
 				})}
 			</div>
+			{/* <div>
+				<ColorsPicker />
+			</div> */}
 		</div>
 	);
 }

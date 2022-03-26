@@ -68,6 +68,7 @@ export function Sidebar(props: SidebarProps) {
 				{data.length > 0 &&
 					data.map((item: any, index: number) => (
 						<UserChat
+							username={item.user.username}
 							lastMessageStatus={item.messages.status}
 							ownerId={item.ownerId}
 							onPress={() => handleSelector(item)}
